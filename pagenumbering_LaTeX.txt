@@ -1,0 +1,6 @@
+\tableofcontents
+
+\pagenumbering{gobble}
+\cleardoublepage
+\pagenumbering{arabic}
+\setcounter{page}{1}
