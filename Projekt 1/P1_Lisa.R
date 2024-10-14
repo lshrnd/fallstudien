@@ -5,7 +5,7 @@ data02 = data[data$Year == 2002,]
 apply(data22, 2, unique)
 library(scales)
 
-# TODO big: Datensaetze cleanen, also NA entfernen, vorallem für 4
+# TODO big: Datensaetze cleanen, also NA entfernen, vorallem f?r 4
   # auch wichtig um korrekte Stichprobengroesse angeben zu koennen etc
 # 1 - Haeufigkeitsverteilung
 # Box-Plots der drei Lebenserwartung-Kennzahlen von 2022
@@ -26,8 +26,8 @@ hist(data22$Life_Expectancy_Female, breaks = seq(50,100,2), freq = F, xlim = c(5
 # Idee: Farbschema erstellen, dass den Regionen Farben zuordnet und den Subregionen die Farbe ihrer Region
 region_cols = alpha(c("Asia" = "red", "Europe" = "green", "Africa" = "blue", "Oceania" = NA, "Americas" = "yellow"),0.2)
 
-RegionTable = sort(table(data22$Region), decreasing = T)
-barplot(RegionTable, col = region_cols[names(RegionTable)], ylim = c(0,60))
+RegionTable = sort(table(data22$Region), decreasing = F)
+barplot(RegionTable, col = region_cols[names(RegionTable)], xlim = c(0,60), horiz = T, las = 2)
 
 SubregionTable = sort(table(data22$Subregion), decreasing = F)
 barplot(SubregionTable, col = region_cols[data22$Region[match(names(SubregionTable), data22$Subregion)]],
@@ -65,7 +65,7 @@ legend("topleft", legend = c("Asia","Europe","Africa","Oceania","Americas"),
   # gar kein PLan ob das irgnen interpretativen Mehrwert hat
 
 plot(data22$Total_Fertility_Rate,data22$Life_Expectancy_Overall)
-plot(data02$Life_Expectancy_Overall,Life_Expectancy_Change)
+plot(data02$Life_Expectancy_Overall,Life_Expectancy_Change, col = region_cols[data02$Region])
 
 ######################
 tapply(data22$Life_Expectancy_Overall,data22$Region,mean, na.rm = T)
