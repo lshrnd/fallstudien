@@ -5,6 +5,7 @@ data = read.csv("census_2022_2002.csv")
 data = data[ - c(429,430),] # USA entfernen da NA
 
 data22 = data[data$Year == 2022,]
+data02 = data[data$Year == 2002,]
 # Daten zu 2022 (fuer 1 bis 3)
 
 data02_clean = na.omit(data02) 
