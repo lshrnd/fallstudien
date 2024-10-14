@@ -18,6 +18,7 @@ hist(data22$Life_Expectancy_Overall, breaks = seq(50,100,2), freq = F, xlim = c(
 hist(data22$Life_Expectancy_Male, breaks = seq(50,100,2), freq = F, xlim = c(50,100), ylim = c(0,0.09))
 hist(data22$Life_Expectancy_Female, breaks = seq(50,100,2), freq = F, xlim = c(50,100), ylim = c(0,0.09))
 
+# maybe male female in einem hist
 
 # Barplot der Regionen und Subregionen, absteigend sortiert
 # dient dem Ueberblick ueber die Region-Einteilungen
@@ -28,9 +29,9 @@ region_cols = alpha(c("Asia" = "red", "Europe" = "green", "Africa" = "blue", "Oc
 RegionTable = sort(table(data22$Region), decreasing = T)
 barplot(RegionTable, col = region_cols[names(RegionTable)], ylim = c(0,60))
 
-SubregionTable = sort(table(data22$Subregion), decreasing = T)
+SubregionTable = sort(table(data22$Subregion), decreasing = F)
 barplot(SubregionTable, col = region_cols[data22$Region[match(names(SubregionTable), data22$Subregion)]],
-        las = 2, cex.names = 0.8)
+        las = 2, cex.names = 0.8, horiz = T)
   # col-Explanation: nimmt die Namen der Tables und ordnet sie den entsprechenden Regionen zu.
     # bei den Subregions wird anhand des DataFrames erst zugeordnet, welche Subregion welcher Region entspricht
 # TODO: nur innerhalb den Regionen sortieren, nicht komplett
@@ -46,6 +47,7 @@ hist(data22$Total_Fertility_Rate, breaks = 21, freq = F)
 # prozentuale Veraenderung der Lebenserwartung in Abh. von der Geburtenrate in 2002
 Life_Expectancy_Change = (data22$Life_Expectancy_Overall - data02$Life_Expectancy_Overall) / data02$Life_Expectancy_Overall
 plot(data02$Total_Fertility_Rate, Life_Expectancy_Change)
+plot(data02$Total_Fertility_Rate, data22$Life_Expectancy_Overall - data02$Life_Expectancy_Overall)
 
 histcols = alpha(c("red","red",rep("green",22)),0.1)
 hist(Life_Expectancy_Change, xlim = c(-0.1,0.5), breaks = 20, col = histcols)
@@ -62,7 +64,8 @@ legend("topleft", legend = c("Asia","Europe","Africa","Oceania","Americas"),
 # man sieht wenig gesunken (auch siehe hist oben)
   # gar kein PLan ob das irgnen interpretativen Mehrwert hat
 
-
+plot(data22$Total_Fertility_Rate,data22$Life_Expectancy_Overall)
+plot(data02$Life_Expectancy_Overall,Life_Expectancy_Change)
 
 ######################
 tapply(data22$Life_Expectancy_Overall,data22$Region,mean, na.rm = T)
