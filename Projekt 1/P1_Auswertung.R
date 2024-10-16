@@ -11,6 +11,9 @@ data02 = data[data$Year == 2002,]
 data02_clean = na.omit(data02) 
 data22_clean = semi_join(data22, data02_clean, by= "Country")
 # Daten wenn beide Jahre existieren (fuer 4)
+data_merge_clean<-merge(data02_clean, data22_clean, by= "Country",
+                        suffixes = c("_2002","_2022"))
+data_merge_clean<-data_merge_clean[, -c(2,7:9)]
 
 #### allgemeine Variablen:
 mar_def = c(5, 4, 4, 2) + 0.1 # Default-Margin
@@ -71,3 +74,43 @@ legend("topleft", legend = c(region_names,"Diagonale"),
        #pch = c(16,17,18,20,19,NA),lty = c(rep(NA,5),1), col = c(region_cols,"darkgrey"),
        pch = c(rep(21,5),NA), lty = c(rep(NA,5),1), pt.bg = region_cols, col = c(rep("black",5),"darkgrey"),
        pt.cex = 1.1, text.width = 4, x.intersp = 0.7, y.intersp = 0.8)
+
+#Dotchart für die Lebenserwatung im Vergleich 2002 gegen 2022
+#Farblich Regionale Aufteilung auskommentiert
+data_merge_clean<-data_merge_clean[order(
+  data_merge_clean$Life_Expectancy_Overall_2002),]
+dotchart(data_merge_clean$Life_Expectancy_Overall_2002, 
+         xlab = "Lebenserwartung in Jahren", ylab = "Länder",
+         main = "Veränderung der Lebenserwartung von 2002 zu 2022",
+         pch = 1, cex = 0.7,
+         xlim = range(c(data_merge_clean$Life_Expectancy_Overall_2022,
+                        data_merge_clean$Life_Expectancy_Overall_2002)),
+         lcolor = "White",
+         #col = alpha(region_cols[data_merge_clean$Region_2022],0.7)
+         )
+points(data_merge_clean$Life_Expectancy_Overall_2022,
+       1:nrow(data_merge_clean),  pch=16,
+       #col = alpha(region_cols[data_merge_clean$Region_2022],0.7)
+)
+legend("topleft", legend = c("2002", "2022"), pch = c(1,16))
+#legend("left", legend = region_names, fill = alpha(region_cols, 0.7),title = "Regionen")
+
+#Dotchart Fertility im Vergleich 2002 gegen 2022
+# Farbliche Aufteilung nach Region auskommentiert
+data_merge_clean<-data_merge_clean[order(
+  data_merge_clean$Total_Fertility_Rate_2002),]
+dotchart(data_merge_clean$Total_Fertility_Rate_2002,
+         main = "Veränderung der Fertilitätsrate von 2002 zu 2022",
+         xlab = "Fertilitätsrate", pch=1,
+         xlim = range(c(data_merge_clean$Total_Fertility_Rate_2022,
+                        data_merge_clean$Total_Fertility_Rate_2002)),
+         ylab = "Länder", 
+         lcolor = "White",
+        # col = alpha(region_cols[data_merge_clean$Region_2022],0.7)
+         )
+points(data_merge_clean$Total_Fertility_Rate_2022,
+       1:nrow(data_merge_clean),  pch=16,
+       #col = alpha(region_cols[data_merge_clean$Region_2022],0.7)
+       )
+legend("right", legend = c("2002", "2022"), pch = c(1,16), title = "Jahr")
+#legend("bottomright", legend = region_names, fill = alpha(region_cols, 0.7),title = "Regionen")
