@@ -36,8 +36,8 @@ par(mar=c(4, 9, 2.5, 2))
 SubregionTable = sort(table(data22$Subregion), decreasing = F)
 barplot(SubregionTable, col = alpha(region_cols[data22$Region[match(names(SubregionTable), data22$Subregion)]],0.25),
         las = 2, cex.names = 0.9, horiz = T, main = "Anzahl der Länder innerhalb einer Subregion")
-legend(21, 15, legend = region_names, pt.bg = region_cols, pch = 22, col = "black", 
-       pt.cex = 1.3, text.width = 2, x.intersp = 0.7, y.intersp = 0.8)
+legend(19, 15, legend = region_names, pt.bg = alpha(region_cols, 0.25), pch = 22, col = "black", 
+       pt.cex = 1.3, text.width = 2, x.intersp = 0.6, y.intersp = 0.8)
 par(mar=mar_def)
 
 # Box-Plot der Geburtenrate in 2022
