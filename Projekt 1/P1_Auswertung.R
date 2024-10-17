@@ -86,14 +86,14 @@ dotchart(data_merge_clean$Life_Expectancy_Overall_2002,
          xlim = range(c(data_merge_clean$Life_Expectancy_Overall_2022,
                         data_merge_clean$Life_Expectancy_Overall_2002)),
          lcolor = "White",
-         #col = alpha(region_cols[data_merge_clean$Region_2022],0.7)
+           col = alpha(region_cols[data_merge_clean$Region_2022],0.7)
          )
 points(data_merge_clean$Life_Expectancy_Overall_2022,
        1:nrow(data_merge_clean),  pch=16,
-       #col = alpha(region_cols[data_merge_clean$Region_2022],0.7)
+         col = alpha(region_cols[data_merge_clean$Region_2022],0.7)
 )
-legend("topleft", legend = c("2002", "2022"), pch = c(1,16))
-#legend("left", legend = region_names, fill = alpha(region_cols, 0.7),title = "Regionen")
+#legend("topleft", legend = c("2002", "2022"), pch = c(1,16))
+legend("left", legend = region_names, fill = alpha(region_cols, 0.7),title = "Regionen")
 
 #Dotchart Fertility im Vergleich 2002 gegen 2022
 # Farbliche Aufteilung nach Region auskommentiert

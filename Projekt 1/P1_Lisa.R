@@ -83,3 +83,6 @@ sum(table(data22$Subregion))
 sum(table(data22$Region))
 
 min(data02$Life_Expectancy_Overall, na.rm = T)
+
+RegionTable
+SubregionTable
