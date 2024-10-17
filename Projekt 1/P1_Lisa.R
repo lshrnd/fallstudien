@@ -57,7 +57,7 @@ region_symb = c("Asia" = 16, "Europe" = 17, "Africa" = 18, "Oceania" = 20, "Amer
 plot(data02$Life_Expectancy_Overall,data22$Life_Expectancy_Overall,
      pch = region_symb[data02$Region], col = region_cols[data02$Region],
      xlim = c(40,90), ylim = c(40,90))
-points(40:90, 40:90, type = "l", col = grey(0,0.3) )
+points(40:90, 40:90, type = "l", col = grey(0,0.3) )http://127.0.0.1:8261/graphics/plot_zoom_png?width=1184&height=861
 legend("topleft", legend = c("Asia","Europe","Africa","Oceania","Americas"),
        pch = c(16,17,18,20,19), col = region_cols, cex = 0.5)
 # alles ueber linie ist gestiegen, alles drunter gesunken. 
@@ -84,5 +84,15 @@ sum(table(data22$Region))
 
 min(data02$Life_Expectancy_Overall, na.rm = T)
 
-RegionTable
-SubregionTable
+#
+par(mar = c(4,13,4,4))
+sorted = factor(paste(data22$Region,data22$Subregion, sep=": "))
+boxplot(data22$Life_Expectancy_Overall ~ sorted, horizontal = T, las = 2, ylab = NA, cex = NA,
+        col = alpha(rep(region_cols, times = c(5,4,4,4,4)),0.25)
+        )
+#boxplot(data22$Life_Expectancy_Overall sorted#boxplot(data22$Life_Expectancy_Overall ~ data22$Region, add = T, horizontal = T, at = c(3,7.5,11.5,15.5,19.5),
+ #       boxwex = 3, col = alpha("white",0.5), names = NA, outline = F, las = 2)
+
+
+
+
