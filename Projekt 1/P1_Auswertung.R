@@ -24,27 +24,26 @@ region_names = c("Asien", "Europa", "Afrika", "Ozeanien", "Amerika")
 ####
 # Box-Plots der drei Lebenserwartung-Kennzahlen von 2022
 boxplot(data22$Life_Expectancy_Overall, data22$Life_Expectancy_Male, data22$Life_Expectancy_Female, 
-        names = c("Gesamt","Männlich","Weiblich"), las = 1, cex.axis = 0.7, main = "Boxplot der Lebenserwartungen aller Länder",
+        names = c("Gesamt","Männlich","Weiblich"), las = 1, cex.axis = 0.7,
         xlab = "Alter in Jahre", horizontal = T)
 
 
 # Bar-Plot der Haeufigkeiten der Regionen/Subregionen
 par(mar=c(4, 5, 2.5, 2))
 RegionTable = sort(table(data22$Region), decreasing = F)
-barplot(RegionTable, col = alpha(region_cols[names(RegionTable)],0.25), xlim = c(0,60), horiz = T, las = 2,
-        main = "Anzahl der Länder innerhalb einer Region")
+barplot(RegionTable, col = alpha(region_cols[names(RegionTable)],0.25), xlim = c(0,60), horiz = T, las = 2)
 par(mar=mar_def)
 
 par(mar=c(4, 9, 2.5, 2))
 SubregionTable = sort(table(data22$Subregion), decreasing = F)
 barplot(SubregionTable, col = alpha(region_cols[data22$Region[match(names(SubregionTable), data22$Subregion)]],0.25),
-        las = 2, cex.names = 0.9, horiz = T, main = "Anzahl der Länder innerhalb einer Subregion")
+        las = 2, cex.names = 0.9, horiz = T)
 legend(19, 15, legend = region_names, pt.bg = alpha(region_cols, 0.25), pch = 22, col = "black", 
        pt.cex = 1.3, text.width = 2, x.intersp = 0.6, y.intersp = 0.8)
 par(mar=mar_def)
 
 # Box-Plot der Geburtenrate in 2022
-boxplot(data22$Total_Fertility_Rate, horizontal = T, main = "Geburtenrate in 2022")
+boxplot(data22$Total_Fertility_Rate, horizontal = T)
 
 
 #### 4 - Jahresvergleich
@@ -52,13 +51,12 @@ Life_Expectancy_Change = (data22_clean$Life_Expectancy_Overall - data02_clean$Li
 # Histogramm der Veraenderung der Lebenserwartung
 histcols = alpha(c("red","red",rep("green",22)),0.15)
 hist(Life_Expectancy_Change + 1, xlim = c(0.9,1.5), breaks = 20, col = histcols,
-     xlab = "Anteil der vorherigen Lebenserwartung, 1.1 = +10%", ylab = "absolute Häufigkeit", main = "Veränderung der Lebenserwartung", )
+     xlab = "Anteil der vorherigen Lebenserwartung, 1.1 = +10%", ylab = "absolute Häufigkeit")
   # TODO: xlab / main muss verbessert werden, so nicht aussagekräftig genug
 
 # Scatterplot der Lebenserwartung in 2002 gegen die Veraenderung der Lebensrate
 plot(data02_clean$Life_Expectancy_Overall,Life_Expectancy_Change, bg = alpha(region_cols[data02_clean$Region],0.7), pch = 21, col = "darkgrey",
-     xlab = "Lebenserwartung in 2002 in Jahren", ylab = "Veränderung in Prozent", 
-     main = "prozentuale Veränderung der Lebenserwartung von 2002 zu 2022")
+     xlab = "Lebenserwartung in 2002 in Jahren", ylab = "Veränderung in Prozent")
 legend(82, 0.43, legend = region_names, pt.bg = region_cols, pch = 21, col = "black", 
        pt.cex = 1.3, text.width = 4, x.intersp = 0.7, y.intersp = 0.8)
 
@@ -67,8 +65,8 @@ legend(82, 0.43, legend = region_names, pt.bg = region_cols, pch = 21, col = "bl
 plot(data02_clean$Life_Expectancy_Overall,data22_clean$Life_Expectancy_Overall,
       #pch = region_symb[data02_clean$Region], col = alpha(region_cols[data02_clean$Region],0.7), 
      bg = alpha(region_cols[data02_clean$Region],0.7), pch = 21, col ="darkgrey",
-     xlim = c(45,90), ylim = c(45,90), xlab = "Lebenserwartung in 2002 in Jahren", ylab = "Lebenserwartung in 2022 in Jahren", 
-     main = "Lebenserwartung von 2002 und 2022 im Vergleich")
+     xlim = c(45,90), ylim = c(45,90), xlab = "Lebenserwartung in 2002 in Jahren",
+     ylab = "Lebenserwartung in 2022 in Jahren")
 points(45:90, 45:90, type = "l", col = grey(0,0.3) )
 legend("topleft", legend = c(region_names,"Diagonale"),
        #pch = c(16,17,18,20,19,NA),lty = c(rep(NA,5),1), col = c(region_cols,"darkgrey"),
@@ -81,7 +79,6 @@ data_merge_clean<-data_merge_clean[order(
   data_merge_clean$Life_Expectancy_Overall_2002),]
 dotchart(data_merge_clean$Life_Expectancy_Overall_2002, 
          xlab = "Lebenserwartung in Jahren", ylab = "Länder",
-         main = "Veränderung der Lebenserwartung von 2002 zu 2022",
          pch = 1, cex = 0.7,
          xlim = range(c(data_merge_clean$Life_Expectancy_Overall_2022,
                         data_merge_clean$Life_Expectancy_Overall_2002)),
@@ -100,7 +97,6 @@ legend("left", legend = region_names, fill = alpha(region_cols, 0.7),title = "Re
 data_merge_clean<-data_merge_clean[order(
   data_merge_clean$Total_Fertility_Rate_2002),]
 dotchart(data_merge_clean$Total_Fertility_Rate_2002,
-         main = "Veränderung der Fertilitätsrate von 2002 zu 2022",
          xlab = "Fertilitätsrate", pch=1,
          xlim = range(c(data_merge_clean$Total_Fertility_Rate_2022,
                         data_merge_clean$Total_Fertility_Rate_2002)),
