@@ -59,17 +59,23 @@ boxplot(data22$Life_Expectancy_Overall, data22$Life_Expectancy_Male, data22$Life
         names = c("Gesamt","Männlich","Weiblich"), las = 1, cex.axis = 0.7,
         xlab = "Alter in Jahre", horizontal = T)
 
+#Kennzahlen der Lebenserwatung
+summary(data22$Life_Expectancy_Overall)
+summary(data22$Life_Expectancy_Male)
+summary(data22$Life_Expectancy_Female)
 
 # Bar-Plot der Haeufigkeiten der Regionen/Subregionen
 par(mar=c(4, 5, 2.5, 2))
 RegionTable = sort(table(data22$Region), decreasing = F)
-barplot(RegionTable, col = alpha(region_cols[names(RegionTable)],0.25), xlim = c(0,60), horiz = T, las = 2)
+barplot_region<-barplot(RegionTable, col = alpha(region_cols[names(RegionTable)],0.25), xlim = c(0,60), horiz = T, las = 2)
+text(RegionTable +0.5 , barplot_region, labels = RegionTable, pos = 4)
 par(mar=mar_def)
 
 par(mar=c(4, 9, 2.5, 2))
 SubregionTable = sort(table(data22$Subregion), decreasing = F)
-barplot(SubregionTable, col = alpha(region_cols[data22$Region[match(names(SubregionTable), data22$Subregion)]],0.25),
+barplot_subregion<-barplot(SubregionTable, col = alpha(region_cols[data22$Region[match(names(SubregionTable), data22$Subregion)]],0.25),
         las = 2, cex.names = 0.9, horiz = T)
+text(SubregionTable +0.5 , barplot_subregion, labels = SubregionTable, pos = 4)
 legend(19, 15, legend = region_names, pt.bg = alpha(region_cols, 0.25), pch = 22, col = "black", 
        pt.cex = 1.3, text.width = 2, x.intersp = 0.6, y.intersp = 0.8)
 par(mar=mar_def)
@@ -77,6 +83,14 @@ par(mar=mar_def)
 # Box-Plot der Geburtenrate in 2022
 boxplot(data22$Total_Fertility_Rate, horizontal = T)
 
+###Kennzahlen Geburtenrate
+summary(data22$Total_Fertility_Rate)
+#Minimale Gebursrate
+min(data22$Total_Fertility_Rate)
+data22$Country[which.min(data22$Total_Fertility_Rate)]
+#Maximale Geburtsrate
+max(data22$Total_Fertility_Rate)
+data22$Country[which.max(data22$Total_Fertility_Rate)]
 
 #### 4 - Jahresvergleich
 Life_Expectancy_Change = (data22_clean$Life_Expectancy_Overall - data02_clean$Life_Expectancy_Overall) / data02_clean$Life_Expectancy_Overall
