@@ -2,6 +2,37 @@ library(scales)
 library(dplyr)
 
 data = read.csv("census_2022_2002.csv")
+
+### Regionen/Subregionen verdeutschen
+data$Region[data$Region == "Europe"] = "Europa"
+data$Region[data$Region == "Asia"] = "Asien"
+data$Region[data$Region == "Americas"] = "Amerika"
+data$Region[data$Region == "Africa"] = "Afrika"
+data$Region[data$Region == "Oceania"] = "Ozeanien"
+
+data$Subregion[data$Subregion == "Northern Europe"] = "Nordeuropa"
+data$Subregion[data$Subregion == "Western Europe"] = "Westeuropa"
+data$Subregion[data$Subregion == "Eastern Europe"] = "Osteuropa"
+data$Subregion[data$Subregion == "Southern Europe"] = "Suedeuropa"
+data$Subregion[data$Subregion == "Western Asia"] = "Westasien"
+data$Subregion[data$Subregion == "South-Central Asia"] = "Sued-Zentralasien"
+data$Subregion[data$Subregion == "South-Eastern Asia"] = "Sued-Ostasien"
+data$Subregion[data$Subregion == "Eastern Asia"] = "Ostasien"
+data$Subregion[data$Subregion == "Northern America"] = "Nordamerika"
+data$Subregion[data$Subregion == "Central America"] = "Mittelamerika"
+data$Subregion[data$Subregion == "South America"] = "Suedamerika"
+data$Subregion[data$Subregion == "Caribbean"] = "Karibik"
+data$Subregion[data$Subregion == "Northern Africa"] = "Nordafrika"
+data$Subregion[data$Subregion == "Middle Africa"] = "Zentralafrika"
+data$Subregion[data$Subregion == "Southern Africa"] = "Suedafrika"
+data$Subregion[data$Subregion == "Western Africa"] = "Westafrika"
+data$Subregion[data$Subregion == "Eastern Africa"] = "Ostafrika"
+data$Subregion[data$Subregion == "Australia/New Zealand"] = "Australien/Neuseeland"
+data$Subregion[data$Subregion == "Micronesia"] = "Mikronesien"
+data$Subregion[data$Subregion == "Melanesia"] = "Melanesien"
+data$Subregion[data$Subregion == "Polynesia"] = "Polynesien"
+###
+
 data = data[ - c(429,430),] # USA entfernen da NA
 
 data22 = data[data$Year == 2022,]
@@ -14,6 +45,7 @@ data22_clean = semi_join(data22, data02_clean, by= "Country")
 data_merge_clean<-merge(data02_clean, data22_clean, by= "Country",
                         suffixes = c("_2002","_2022"))
 data_merge_clean<-data_merge_clean[, -c(2,7:9)]
+
 
 #### allgemeine Variablen:
 mar_def = c(5, 4, 4, 2) + 0.1 # Default-Margin
@@ -110,3 +142,34 @@ points(data_merge_clean$Total_Fertility_Rate_2022,
        )
 legend("right", legend = c("2002", "2022"), pch = c(1,16), title = "Jahr")
 #legend("bottomright", legend = region_names, fill = alpha(region_cols, 0.7),title = "Regionen")
+
+
+## Boxplots auf Subregionen aufgeteilt
+region_colsN = c("Africa" = "blue", "Asia" = "red","Americas" = "yellow","Europe" = "green", "Oceania" = NA)
+# l_order muss halt jetzt auch deutsch sein dann ._.
+l_order = c("Southern Africa", "Middle Africa", "Western Africa", "Eastern Africa", "Northern Africa",
+            "South-Central Asia", "South-Eastern Asia", "Western Asia", "Eastern Asia",
+            "Central America",  "South America", "Caribbean", "Northern America",
+            "Eastern Europe", "Southern Europe", "Northern Europe", "Western Europe",
+            "Micronesia", "Melanesia", "Polynesia", "Australia/New Zealand")
+f22 = factor(data22$Subregion, levels = l_order)
+f_clean = factor(data22_clean$Subregion, levels = l_order)
+# nur ein Jahr:
+pdf(file = "BoxplotRegionen2022.pdf", width = 10, height = 12)
+boxplot(data22$Life_Expectancy_Overall ~ f22, horizontal = T, las = 2, ylim = c(45,90),
+        col = alpha(c(rep(region_colsN, times = c(5,4,4,4,4))),0.25))
+dev.off()
+
+
+# Vergleich beide Jahre
+pdf(file = "BoxplotRegionenBeide.pdf", width = 10, height = 11)
+par(mar = c(4,10,1.5,4))
+vek1 = seq(0.8,32,by=1.5)
+vek2 = seq(1.2,32,by=1.5)
+boxplot(data02_clean$Life_Expectancy_Overall ~ f_clean, horizontal = T, las = 2, ylim = c(45,90), 
+        at = vek1, boxwex = 0.5, ylab = NA, xlab = "Lebenserwartung in Jahren" )
+boxplot(data22_clean$Life_Expectancy_Overall ~ f_clean, horizontal = T, las = 2, ylim = c(45,90), 
+        add = T, at = vek2, boxwex = 0.5, names = "", axes = F,
+        col = alpha(c(rep(region_colsN, times = c(5,4,4,4,4))),1))
+abline(h = vek1[1:20]+0.95, col = "grey")
+dev.off()

@@ -87,12 +87,25 @@ min(data02$Life_Expectancy_Overall, na.rm = T)
 #
 par(mar = c(4,13,4,4))
 sorted = factor(paste(data22$Region,data22$Subregion, sep=": "))
-boxplot(data22$Life_Expectancy_Overall ~ sorted, horizontal = T, las = 2, ylab = NA, cex = NA,
-        col = alpha(rep(region_cols, times = c(5,4,4,4,4)),0.25)
-        )
-#boxplot(data22$Life_Expectancy_Overall sorted#boxplot(data22$Life_Expectancy_Overall ~ data22$Region, add = T, horizontal = T, at = c(3,7.5,11.5,15.5,19.5),
- #       boxwex = 3, col = alpha("white",0.5), names = NA, outline = F, las = 2)
+boxplot(data22$Life_Expectancy_Overall ~ f, horizontal = T, las = 2, ylim = c(45,90),
+        col = alpha(c(rep("blue",5),rep("red",4),rep("yellow",4),rep("green",4),NA,NA,NA,NA),0.25))
+
+f = factor(data22$Subregion, levels = l1)
+
+l0 = c("Western Africa", "Eastern Africa", "Middle Africa", "Northern Africa", "Southern Africa",
+       "Western Asia", "South-Central Asia", "South-Eastern Asia", "Eastern Asia",
+       "Caribbean", "South America", "Central America", "Northern America",
+       "Southern Europe", "Northern Europe", "Eastern Europe", "Western Europe",
+       "Polynesia", "Micronesia", "Melanesia", "Australia/New Zealand") 
+
+l1 = c("Southern Africa", "Middle Africa", "Western Africa", "Eastern Africa", "Northern Africa",
+  "South-Central Asia", "South-Eastern Asia", "Western Asia", "Eastern Asia",
+  "Central America",  "South America", "Caribbean", "Northern America",
+  "Eastern Europe", "Southern Europe", "Northern Europe", "Western Europe",
+  "Micronesia", "Melanesia", "Polynesia", "Australia/New Zealand")
 
 
-
+boxplot(data02$Life_Expectancy_Overall ~ f, horizontal = T, las = 2, ylim = c(45,90), )
+boxplot(data22$Life_Expectancy_Overall ~ f, horizontal = T, las = 2, ylim = c(45,90), add = T,
+        col = alpha(c(rep("blue",5),rep("red",4),rep("yellow",4),rep("green",4),NA,NA,NA,NA),1))
 
