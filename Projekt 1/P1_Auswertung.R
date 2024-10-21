@@ -169,14 +169,13 @@ l_order = c("Southern Africa", "Middle Africa", "Western Africa", "Eastern Afric
 f22 = factor(data22$Subregion, levels = l_order)
 f_clean = factor(data22_clean$Subregion, levels = l_order)
 # nur ein Jahr:
-pdf(file = "BoxplotRegionen2022.pdf", width = 10, height = 12)
 boxplot(data22$Life_Expectancy_Overall ~ f22, horizontal = T, las = 2, ylim = c(45,90),
         col = alpha(c(rep(region_colsN, times = c(5,4,4,4,4))),0.25))
-dev.off()
+
 
 
 # Vergleich beide Jahre
-pdf(file = "BoxplotRegionenBeide.pdf", width = 10, height = 11)
+
 par(mar = c(4,10,1.5,4))
 vek1 = seq(0.8,32,by=1.5)
 vek2 = seq(1.2,32,by=1.5)
@@ -186,4 +185,3 @@ boxplot(data22_clean$Life_Expectancy_Overall ~ f_clean, horizontal = T, las = 2,
         add = T, at = vek2, boxwex = 0.5, names = "", axes = F,
         col = alpha(c(rep(region_colsN, times = c(5,4,4,4,4))),1))
 abline(h = vek1[1:20]+0.95, col = "grey")
-dev.off()
