@@ -1,5 +1,5 @@
 gruppe
-	- Gruppenzughörigkeit: Gruppe 1 = GU & GU, Gruppe 2 = UG & UG.
+	- Gruppenzughörigkeit: Gruppe 1 = GU & GU, Gruppe 2 = UG & GU.
 
 durchgang
 	- Erster oder zweiter Durchgang. 
@@ -8,7 +8,7 @@ test_typ
 	- Ob GU oder UG getestet wird.
 
 B
-	- Bearbeitungzeit (Sekunden)
+	- Bearbeitungszeit (Sekunden)
 
 AR
 	- Anzahl richtiger Zeichen
