@@ -1,9 +1,9 @@
 TODO:
 
+- "Forschungsfrage"/"Motivation" anschauen
 - Jeder schaut deskriptiv ALLE Variable an und überlegt wie er sie beschreiben würde (Rohdaten)
 	-> Donnerstag zusammentragen
 	-> In gemeinsamer R-Datei festhalten
-- Erklärung was ein statistischer Test ist?
 - Quellen für Tests raussuchen
 	Liste an Tests:
 		t-Test
@@ -13,6 +13,7 @@ TODO:
 
 FRAGEN:
 
+- Erklärung was ein statistischer Test ist?
 - Wie genau müssen Tests erklärt werden
 - Wie motiviert man Tests
 - Wie muss man Verteilungen einführen? (Normalverteilung!)
