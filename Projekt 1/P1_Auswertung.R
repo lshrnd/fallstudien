@@ -49,7 +49,7 @@ data_merge_clean<-data_merge_clean[, -c(2,7:9)]
 
 #### allgemeine Variablen:
 mar_def = c(5, 4, 4, 2) + 0.1 # Default-Margin
-region_cols = c("Asia" = "red", "Europe" = "green", "Africa" = "blue", "Oceania" = NA, "Americas" = "yellow")
+region_cols = c("Asien" = "red", "Europa" = "green", "Afrika" = "blue", "Ozeanien" = NA, "Amerika" = "yellow")
 region_names = c("Asien", "Europa", "Afrika", "Ozeanien", "Amerika")
 
 
