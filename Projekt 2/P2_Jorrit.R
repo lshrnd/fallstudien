@@ -1,9 +1,12 @@
+##### Fallstudien 1 - Projekt 2
+##### Autor: Jorrit Kuehne
+#####
+
+library(scales)
+
 setwd("C:/Users/jorri/Documents/GitHub/fallstudien/Projekt 2")
 
 data = read.table("Konzentrationsdaten.txt", header = T)
-
-# Extremwert entfernen
- data = data[- which(data$id == 14), ]
 
 {
 dataG1 = data[data$gruppe == 1, ]
@@ -20,6 +23,155 @@ dataD1UG = dataD1[dataD1$test_typ == "ug", ]
 
 n = length(data$id) / 2
 n
+
+################## DESKRIPTION ALLER VARIABLEN (UNIVARIAT) #####################
+
+    # gruppe
+table(data$gruppe)
+
+    # durchgang (irrelevant -> fuer Jede id liegen 2 Durchgaenge vor)
+table(data$durchgang)
+
+    # test_typ (irrelevant -> ableitbar aus gruppe und durchgang)
+table(data$test_typ)
+
+    # B (Bearbeitungszeit)
+
+# Kennzahlen
+summB = summary(data$B, quantile.type = 2)
+summB
+sdB = sd(data$B)
+sdB
+
+# Histogramm
+{
+hist(data$B,
+     main = "",
+     xlim = c(40, 220),
+     ylim = c(0,30),
+     xlab = "Bearbeitungszeit (s)",
+     ylab = "abs. Hfkt",
+     xaxt = "n"
+     )
+axis(1, at = seq(40, 220, 20))
+}
+
+# Boxplot
+boxplot(data$B,
+        horizontal = TRUE,
+        xlab = "Bearbeitungszeit (s)"
+        )
+
+# 1-D Streudiagramm
+stripchart(data$B,
+           method = "jitter",
+           pch = 16,
+           col = alpha("blue", 0.3),
+           #vertical = TRUE,
+           add = TRUE
+           )
+
+    # AR (Anzahl Richtige)
+
+# Kennzahlen
+summary(data$AR, quantile.type = 2)
+sd(data$AR)
+
+# HauefigkeitsTabelle (gut)
+htAR = table(data$AR)
+htAR
+
+plot(htAR) # (??)
+
+# Balkendiagramm (gut)
+barplot(table(data$AR),
+        ylim = c(0, 25),
+        xlab = "Anzahl Richtige",
+        ylab = "abs. Hfkt"
+        )
+
+# Histogramm (hier eher nicht sinnvoll)
+{
+hist(data$AR,
+     ylim = c(0, 30),
+     xaxt = "n",
+     main = "",
+     ylab = "abs. Hfkt",
+     xlab = "Anzahl Richtige"
+     )
+axis(1, at = seq(10, 26, 4))
+}
+
+# Boxplot (hier eher nicht sinnvoll)
+boxplot(data$AR,
+        horizontal = TRUE,
+        xlab = "Anzahl Richtige"
+        )
+
+# 1-D Streudiagramm (??)
+stripchart(data$AR,
+           method = "stack",
+           pch = 16,
+           col = alpha("blue", 0.3),
+           #vertical = TRUE,
+           #add = TRUE
+           )
+
+    # AA (Anzahl Auslassungen) <=> 25 - AR
+
+# Kennzahlen
+summary(data$AA, quantile.type = 2)
+sd(data$AA)
+
+# HauefigkeitsTabelle ("spiegelt" die von AR)
+htAA = table(data$AA)
+htAA
+
+# Balkendiagramm ("spiegelt" das von AR)
+barplot(table(data$AA),
+        ylim = c(0, 25),
+        xlab = "Anzahl Auslassungen",
+        ylab = "abs. Hfkt"
+        )
+
+    # AF (Anzahl Falscher)
+
+# Kennzahlen
+summary(data$AF, quantile.type = 2)
+sd(data$AF)
+
+# Haeufigkeitstabelle
+htAF = table(data$AF)
+htAF
+
+# Balkendiagramm
+barplot(table(data$AF))
+
+
+# Versuch von stacked Barplots
+m = matrix(data = c(rev(htAR), htAA, htAF, rep(0, 6)), ncol = 3)
+t = as.table(m)
+colnames(t) = c("AR", "AA", "AF")
+t
+.
+barplot(t,
+        horiz = TRUE,
+        las = 1,
+        #col = c("red", "blue")
+        xaxt = "n"
+        )
+
+text(x = cumsum(rev(htAR)) - 1, 
+     y = 1,
+     labels = rev(names(htAR))
+     )
+
+.
+    # KL (Konzentrationsleistung)
+
+# TODO
+
+################################################################################
 
   # DESKRIPTION zu Aufgabe 1 KONZENTRATIONSSCORE
 

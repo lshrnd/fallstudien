@@ -13,6 +13,8 @@ TODO:
 
 FRAGEN:
 
+- Soll/Darf in univariater Deskription schon nach Gruppen/Durchgängen aufgeteilt werden oder nicht?
+	(z.B. die Bearbeitungszeit)
 - Erklärung was ein statistischer Test ist?
 - Wie genau müssen Tests erklärt werden
 - Wie motiviert man Tests
