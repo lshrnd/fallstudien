@@ -165,11 +165,46 @@ text(x = cumsum(rev(htAR)) - 1,
      y = 1,
      labels = rev(names(htAR))
      )
-
+text(x = cumsum(htAA) - 1,
+     y = 2,
+     labels = names(htAA)
+     )
+text(x = cumsum(htAF) - 1,
+     y = 3,
+     labels = names(htAF)
+     )
 .
+
     # KL (Konzentrationsleistung)
 
-# TODO
+# Kennzahlen
+summary(data$KL, quantile.type = 2)
+sd(data$KL)
+
+# Boxplot
+boxplot(data$KL,
+        horizontal = TRUE,
+        xlab = "Konzentrationsleistung"
+        )
+
+# Stripchart
+stripchart(data$KL,
+           method = "jitter",
+           pch = 16,
+           col = alpha("blue", 0.5),
+           xlab = "Konzentrationsleistung",
+           add = TRUE
+           )
+
+# Histogramm
+hist(data$KL,
+     breaks = seq(-40, 30, 5))
+
+# Spielerei
+#plot(data$KL)
+#points(lowess(data$KL), type = "l", col = "red")
+#index = 1:82
+#abline(lm(data$KL ~ index)$coefficients, col = "blue")
 
 ################################################################################
 
@@ -196,7 +231,7 @@ sd(dataD1UG$KL)
 
 ##### DESKRIPTION zu Aufgabe 2
 
-  # Konzentrationsleistung
+  ### Konzentrationsleistung
 hist(dataD1$KL,
      main = "Hist KL Durchgang 1 GES",
      #xlim = c(-30, 20),
@@ -211,23 +246,38 @@ hist(dataD2$KL,
      breaks = seq(-40, 30, 2)
      )
 
+# D1
 summary(dataD1$KL, quantile.type = 2)
 sd(dataD1$KL)
+# D2
 summary(dataD2$KL, quantile.type = 2)
 sd(dataD1$KL)
-
-  # Schauen ob der Quotient NV ist
+# Schauen ob der Quotient NV ist (unnoetig - da 2 stichproben t-test moegl.)
 hist(dataD1$KL / dataD2$KL)
 shapiro.test(dataD1$KL / dataD2$KL)
 
-  # Bearbeitungszeit
 
+  ### Bearbeitungszeit
 hist(dataD1$B,
      main = "Hist B Durchgang 1 GES",
-     xlim = c(40, 250))
+     xlim = c(40, 250)
+     )
 
 hist(dataD2$B,
-     main = "Hist B Durchgang 2 GES")
+     main = "Hist B Durchgang 2 GES"
+     )
+
+# D1
+summary(dataD1$B, quantile.type = 2)
+sd(dataD1$B)
+# D2
+summary(dataD2$B, quantile.type = 2)
+sd(dataD2$B)
+
+##### DESKRIPTION zu Aufgabe 3: Unterschied in Verbesserung der KL?
+
+  # siehe unten Tests zu Aufgabe 3
+
 
 ####################################################
 ############# ENDE DESKRIPTION #####################
@@ -235,9 +285,8 @@ hist(dataD2$B,
 
 
 # Extremwert (aus allen Datensaetzen) entfernen
-data = data[- which(data$id == 14), ]
-
 {
+  data = data[- which(data$id == 14), ]
   dataG1 = data[data$gruppe == 1, ]
   dataG2 = data[data$gruppe == 2, ]
   dataG1D1 = dataG1[dataG1$durchgang == 1, ]
@@ -292,20 +341,28 @@ t.test(deltaB, alternative = "less", mu = 0)
 deltaKLG1 = dataG1D2$KL - dataG1D1$KL
 deltaKLG2 = dataG2D2$KL - dataG2D1$KL
 
-  # histogramme der Differenzen
+  # DESKRIPTION der Differenzen
+  # Histogramme
 hist(deltaKLG1)
 hist(deltaKLG2)
+  # Kennzahlen
+summary(deltaKLG1, quantile.type = 2)
+sd(deltaKLG1)
+summary(deltaKLG2, quantile.type = 2)
+sd(deltaKLG2)
 
-  # Teste auf Normalverteilung  
+  # TESTEN der Hypothese
+
+  # TEST auf Normalverteilung  
 shapiro.test(deltaKLG1)
 shapiro.test(deltaKLG2)
   # NV Annahme (H0) kann nicht abgelehnt werden
 
-  # Teste ob Varianzen gleich
+  # TEST ob Varianzen gleich
 var.test(deltaKLG1, deltaKLG2, alternative = "two.sided")
     # -> Varianzen gleich
 
-  # Zwei-Stichproben t-Test
+  # TEST Zwei-Stichproben t-Test
   # H0: deltaKLG1 <= deltaKLG2  vs  H1: deltaKLG1 > deltaKLG2
 t.test(deltaKLG1, deltaKLG2, alternative = "greater",
        var.equal = TRUE)
