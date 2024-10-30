@@ -2,6 +2,37 @@ library(scales)
 library(dplyr)
 
 data = read.csv("census_2022_2002.csv")
+
+### Regionen/Subregionen verdeutschen
+data$Region[data$Region == "Europe"] = "Europa"
+data$Region[data$Region == "Asia"] = "Asien"
+data$Region[data$Region == "Americas"] = "Amerika"
+data$Region[data$Region == "Africa"] = "Afrika"
+data$Region[data$Region == "Oceania"] = "Ozeanien"
+
+data$Subregion[data$Subregion == "Northern Europe"] = "Nordeuropa"
+data$Subregion[data$Subregion == "Western Europe"] = "Westeuropa"
+data$Subregion[data$Subregion == "Eastern Europe"] = "Osteuropa"
+data$Subregion[data$Subregion == "Southern Europe"] = "Suedeuropa"
+data$Subregion[data$Subregion == "Western Asia"] = "Westasien"
+data$Subregion[data$Subregion == "South-Central Asia"] = "Sued-Zentralasien"
+data$Subregion[data$Subregion == "South-Eastern Asia"] = "Sued-Ostasien"
+data$Subregion[data$Subregion == "Eastern Asia"] = "Ostasien"
+data$Subregion[data$Subregion == "Northern America"] = "Nordamerika"
+data$Subregion[data$Subregion == "Central America"] = "Mittelamerika"
+data$Subregion[data$Subregion == "South America"] = "Suedamerika"
+data$Subregion[data$Subregion == "Caribbean"] = "Karibik"
+data$Subregion[data$Subregion == "Northern Africa"] = "Nordafrika"
+data$Subregion[data$Subregion == "Middle Africa"] = "Zentralafrika"
+data$Subregion[data$Subregion == "Southern Africa"] = "Suedafrika"
+data$Subregion[data$Subregion == "Western Africa"] = "Westafrika"
+data$Subregion[data$Subregion == "Eastern Africa"] = "Ostafrika"
+data$Subregion[data$Subregion == "Australia/New Zealand"] = "Australien/Neuseeland"
+data$Subregion[data$Subregion == "Micronesia"] = "Mikronesien"
+data$Subregion[data$Subregion == "Melanesia"] = "Melanesien"
+data$Subregion[data$Subregion == "Polynesia"] = "Polynesien"
+###
+
 data = data[ - c(429,430),] # USA entfernen da NA
 
 data22 = data[data$Year == 2022,]
@@ -15,9 +46,10 @@ data_merge_clean<-merge(data02_clean, data22_clean, by= "Country",
                         suffixes = c("_2002","_2022"))
 data_merge_clean<-data_merge_clean[, -c(2,7:9)]
 
+
 #### allgemeine Variablen:
 mar_def = c(5, 4, 4, 2) + 0.1 # Default-Margin
-region_cols = c("Asia" = "red", "Europe" = "green", "Africa" = "blue", "Oceania" = NA, "Americas" = "yellow")
+region_cols = c("Asien" = "red", "Europa" = "green", "Afrika" = "blue", "Ozeanien" = NA, "Amerika" = "yellow")
 region_names = c("Asien", "Europa", "Afrika", "Ozeanien", "Amerika")
 
 
@@ -27,17 +59,23 @@ boxplot(data22$Life_Expectancy_Overall, data22$Life_Expectancy_Male, data22$Life
         names = c("Gesamt","Männlich","Weiblich"), las = 1, cex.axis = 0.7,
         xlab = "Alter in Jahre", horizontal = T)
 
+#Kennzahlen der Lebenserwatung
+summary(data22$Life_Expectancy_Overall)
+summary(data22$Life_Expectancy_Male)
+summary(data22$Life_Expectancy_Female)
 
 # Bar-Plot der Haeufigkeiten der Regionen/Subregionen
 par(mar=c(4, 5, 2.5, 2))
 RegionTable = sort(table(data22$Region), decreasing = F)
-barplot(RegionTable, col = alpha(region_cols[names(RegionTable)],0.25), xlim = c(0,60), horiz = T, las = 2)
+barplot_region<-barplot(RegionTable, col = alpha(region_cols[names(RegionTable)],0.25), xlim = c(0,60), horiz = T, las = 2)
+text(RegionTable +0.5 , barplot_region, labels = RegionTable, pos = 4)
 par(mar=mar_def)
 
 par(mar=c(4, 9, 2.5, 2))
 SubregionTable = sort(table(data22$Subregion), decreasing = F)
-barplot(SubregionTable, col = alpha(region_cols[data22$Region[match(names(SubregionTable), data22$Subregion)]],0.25),
+barplot_subregion<-barplot(SubregionTable, col = alpha(region_cols[data22$Region[match(names(SubregionTable), data22$Subregion)]],0.25),
         las = 2, cex.names = 0.9, horiz = T)
+text(SubregionTable +0.5 , barplot_subregion, labels = SubregionTable, pos = 4)
 legend(19, 15, legend = region_names, pt.bg = alpha(region_cols, 0.25), pch = 22, col = "black", 
        pt.cex = 1.3, text.width = 2, x.intersp = 0.6, y.intersp = 0.8)
 par(mar=mar_def)
@@ -45,6 +83,14 @@ par(mar=mar_def)
 # Box-Plot der Geburtenrate in 2022
 boxplot(data22$Total_Fertility_Rate, horizontal = T)
 
+###Kennzahlen Geburtenrate
+summary(data22$Total_Fertility_Rate)
+#Minimale Gebursrate
+min(data22$Total_Fertility_Rate)
+data22$Country[which.min(data22$Total_Fertility_Rate)]
+#Maximale Geburtsrate
+max(data22$Total_Fertility_Rate)
+data22$Country[which.max(data22$Total_Fertility_Rate)]
 
 #### 4 - Jahresvergleich
 Life_Expectancy_Change = (data22_clean$Life_Expectancy_Overall - data02_clean$Life_Expectancy_Overall) / data02_clean$Life_Expectancy_Overall
@@ -110,3 +156,32 @@ points(data_merge_clean$Total_Fertility_Rate_2022,
        )
 legend("right", legend = c("2002", "2022"), pch = c(1,16), title = "Jahr")
 #legend("bottomright", legend = region_names, fill = alpha(region_cols, 0.7),title = "Regionen")
+
+
+## Boxplots auf Subregionen aufgeteilt
+region_colsN = c("Africa" = "blue", "Asia" = "red","Americas" = "yellow","Europe" = "green", "Oceania" = NA)
+# l_order muss halt jetzt auch deutsch sein dann ._.
+l_order = c("Southern Africa", "Middle Africa", "Western Africa", "Eastern Africa", "Northern Africa",
+            "South-Central Asia", "South-Eastern Asia", "Western Asia", "Eastern Asia",
+            "Central America",  "South America", "Caribbean", "Northern America",
+            "Eastern Europe", "Southern Europe", "Northern Europe", "Western Europe",
+            "Micronesia", "Melanesia", "Polynesia", "Australia/New Zealand")
+f22 = factor(data22$Subregion, levels = l_order)
+f_clean = factor(data22_clean$Subregion, levels = l_order)
+# nur ein Jahr:
+boxplot(data22$Life_Expectancy_Overall ~ f22, horizontal = T, las = 2, ylim = c(45,90),
+        col = alpha(c(rep(region_colsN, times = c(5,4,4,4,4))),0.25))
+
+
+
+# Vergleich beide Jahre
+
+par(mar = c(4,10,1.5,4))
+vek1 = seq(0.8,32,by=1.5)
+vek2 = seq(1.2,32,by=1.5)
+boxplot(data02_clean$Life_Expectancy_Overall ~ f_clean, horizontal = T, las = 2, ylim = c(45,90), 
+        at = vek1, boxwex = 0.5, ylab = NA, xlab = "Lebenserwartung in Jahren" )
+boxplot(data22_clean$Life_Expectancy_Overall ~ f_clean, horizontal = T, las = 2, ylim = c(45,90), 
+        add = T, at = vek2, boxwex = 0.5, names = "", axes = F,
+        col = alpha(c(rep(region_colsN, times = c(5,4,4,4,4))),1))
+abline(h = vek1[1:20]+0.95, col = "grey")

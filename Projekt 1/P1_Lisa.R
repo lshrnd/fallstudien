@@ -57,7 +57,7 @@ region_symb = c("Asia" = 16, "Europe" = 17, "Africa" = 18, "Oceania" = 20, "Amer
 plot(data02$Life_Expectancy_Overall,data22$Life_Expectancy_Overall,
      pch = region_symb[data02$Region], col = region_cols[data02$Region],
      xlim = c(40,90), ylim = c(40,90))
-points(40:90, 40:90, type = "l", col = grey(0,0.3) )
+points(40:90, 40:90, type = "l", col = grey(0,0.3) )http://127.0.0.1:8261/graphics/plot_zoom_png?width=1184&height=861
 legend("topleft", legend = c("Asia","Europe","Africa","Oceania","Americas"),
        pch = c(16,17,18,20,19), col = region_cols, cex = 0.5)
 # alles ueber linie ist gestiegen, alles drunter gesunken. 
@@ -83,3 +83,29 @@ sum(table(data22$Subregion))
 sum(table(data22$Region))
 
 min(data02$Life_Expectancy_Overall, na.rm = T)
+
+#
+par(mar = c(4,13,4,4))
+sorted = factor(paste(data22$Region,data22$Subregion, sep=": "))
+boxplot(data22$Life_Expectancy_Overall ~ f, horizontal = T, las = 2, ylim = c(45,90),
+        col = alpha(c(rep("blue",5),rep("red",4),rep("yellow",4),rep("green",4),NA,NA,NA,NA),0.25))
+
+f = factor(data22$Subregion, levels = l1)
+
+l0 = c("Western Africa", "Eastern Africa", "Middle Africa", "Northern Africa", "Southern Africa",
+       "Western Asia", "South-Central Asia", "South-Eastern Asia", "Eastern Asia",
+       "Caribbean", "South America", "Central America", "Northern America",
+       "Southern Europe", "Northern Europe", "Eastern Europe", "Western Europe",
+       "Polynesia", "Micronesia", "Melanesia", "Australia/New Zealand") 
+
+l1 = c("Southern Africa", "Middle Africa", "Western Africa", "Eastern Africa", "Northern Africa",
+  "South-Central Asia", "South-Eastern Asia", "Western Asia", "Eastern Asia",
+  "Central America",  "South America", "Caribbean", "Northern America",
+  "Eastern Europe", "Southern Europe", "Northern Europe", "Western Europe",
+  "Micronesia", "Melanesia", "Polynesia", "Australia/New Zealand")
+
+
+boxplot(data02$Life_Expectancy_Overall ~ f, horizontal = T, las = 2, ylim = c(45,90), )
+boxplot(data22$Life_Expectancy_Overall ~ f, horizontal = T, las = 2, ylim = c(45,90), add = T,
+        col = alpha(c(rep("blue",5),rep("red",4),rep("yellow",4),rep("green",4),NA,NA,NA,NA),1))
+
