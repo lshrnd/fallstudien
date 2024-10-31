@@ -2,6 +2,7 @@ setwd("C:/Users/lisah/Documents/GitHub/fallstudien/Projekt 2")
 
 data = read.table("Konzentrationsdaten.txt", header = T)
 
+library(lattice)
 library(scales)
 
 data_g1 = data[data$gruppe == 1,]
@@ -27,7 +28,7 @@ hist(data_g2$KL[data_g2$durchgang == 2],
      main = "Gruppe 2, Durchgang 2", 
      breaks = seq(-40,30,2.5))
 
-### Histogramm schöner nebeneinander (2x2) -- noch nicht gut gemacht
+### Histogramm schoener nebeneinander (2x2) -- noch nicht gut gemacht
 par(mfrow=c(1,1))
 histogram(~ KL | durchgang + gruppe, 
           data = data,
@@ -39,10 +40,10 @@ histogram(~ KL | durchgang + gruppe,
 )
 
 ## meine favorites
-#cols_durchg = alpha(c("yellow","red"),0.5)
-cols_durchg = alpha(c("#1E90FF","#FFA500"),c(1,0.5))
+cols_durchg = alpha(c("yellow","red"),0.5)
+cols_durchg2 = alpha(c("#1E90FF","#FFA500"),c(1,0.5))
 
-### Histogramm von KL für beide Gruppen (1x2)
+### Histogramm von KL fuer beide Gruppen (1x2)
 par(mfrow=c(2,1), mar = c(2,2,2,2))
 hist(data_g1$KL[data_g1$durchgang == 1], 
      main = "Gruppe 1 KL", 
@@ -57,12 +58,12 @@ hist(data_g1$KL[data_g1$durchgang == 2],
 hist(data_g2$KL[data_g2$durchgang == 1], 
      main = "Gruppe 2", 
      breaks = seq(-40,30,2.5),
-     col = grey(0.5,0.5),
+     col = cols_durchg2[1],
      freq = F)
 hist(data_g2$KL[data_g2$durchgang == 2], 
      breaks = seq(-40,30,2.5),
      add = T,
-     col = grey(0,0.5),
+     col = cols_durchg2[2],
      freq = F)
 
 
@@ -135,11 +136,11 @@ barplot(rbind(aa_g2d1,aa_g2d2),
         ylim = c(0,10))
 
 ## fuer AF analog
-par(mfrow=c(1,2), mar = c(2,2,2,2))
+par(mfrow=c(2,1), mar = c(2,2,2,2))
 af_g1d1 = table(factor(data_g1$AF[data_g1$durchgang == 1], 
-                       levels = 0:3))
+                       levels = c(0:3,40:45)))
 af_g1d2 = table(factor(data_g1$AF[data_g1$durchgang == 2], 
-                       levels = 0:3))
+                       levels = c(0:3,40:45)))
 barplot(rbind(af_g1d1,af_g1d2), 
         beside = T, 
         col = cols_durchg, 
@@ -147,9 +148,9 @@ barplot(rbind(af_g1d1,af_g1d2),
         ylim = c(0,20))
 
 af_g2d1 = table(factor(data_g2$AF[data_g2$durchgang == 1], 
-                       levels = 0:3))
+                       levels = 0:50))
 af_g2d2 = table(factor(data_g2$AF[data_g2$durchgang == 2], 
-                       levels = 0:3))
+                       levels = 0:50))
 barplot(rbind(af_g2d1,af_g2d2), 
         beside = T, 
         col = cols_durchg, 
@@ -177,20 +178,26 @@ shapiro.test(dataN_g1$KL[dataN_g1$durchgang == 1])
 shapiro.test(dataN_g2$KL[dataN_g2$durchgang == 1])
 
 ### Test 2 f test auf gleiche varianzen
-var.test(dataN_g1$KL[dataN_g1$durchgang == 1],dataN_g2$KL[dataN_g2$durchgang == 1])
+var.test(dataN_g1$KL[dataN_g1$durchgang == 1],
+         dataN_g2$KL[dataN_g2$durchgang == 1])
 
 #### test 3 zweistichproben t test auf gleiche mittelwerte
-t.test(dataN_g1$KL[dataN_g1$durchgang == 1],dataN_g2$KL[dataN_g2$durchgang == 1], var.equal = F)
+t.test(dataN_g1$KL[dataN_g1$durchgang == 1], dataN_g2$KL[dataN_g2$durchgang == 1], 
+       var.equal = F)
 
 
 ## Aufgabe 2 - gruppen ignorieren, durchgaenge unterscheidung, KL
 ### Test 1 shapiro auf normalverteilungsannahme
 shapiro.test(dataN_d1$KL) 
 shapiro.test(dataN_d2$KL)
+
 ### Test 2 f test auf gleiche varianzen
-var.test(dataN_d1$KL,dataN_d2$KL, alternative = "two.sided")
+var.test(dataN_d1$KL, dataN_d2$KL, 
+         alternative = "two.sided")
 #### test 3 zweistichproben t test auf gleiche mittelwerte
-t.test(dataN_d1$KL,dataN_d2$KL, alternative = "less")
+t.test(dataN_d1$KL, dataN_d2$KL, 
+       alternative = "less", 
+       paired = T)
 
 ### Test 1 shapiro auf normalverteilungsannahme
 shapiro.test(dataN_d1$B)
@@ -214,15 +221,18 @@ t.test(deltaB, alternative = "less")
 # Idee II:
 deltaKL_g1 = dataN_g1$KL[dataN_g1$durchgang == 2] - dataN_g1$KL[dataN_g1$durchgang == 1]
 deltaKL_g2 = dataN_g2$KL[dataN_g2$durchgang == 2] - dataN_g2$KL[dataN_g2$durchgang == 1]
-# je groesser, desto besser der score beim 2. mal, desto gr??er die verbesserung 
+# je groesser, desto besser der score beim 2. mal, desto groesser die verbesserung 
 
 # Test 1 auf Normalverteilung
 shapiro.test(deltaKL_g1)
 shapiro.test(deltaKL_g2)
 
 # Test 2 auf gleiche Varianzen
-var.test(deltaKL_g1,deltaKL_g2, alternative = "two.sided")
+var.test(deltaKL_g1,deltaKL_g2, 
+         alternative = "two.sided")
 
 # Test 3 auf hoeheren Mittelwert
-t.test(deltaKL_g1,deltaKL_g2, alternative = "greater", var.equal = T)
+t.test(deltaKL_g1,deltaKL_g2, 
+       alternative = "greater", 
+       var.equal = T)
 
