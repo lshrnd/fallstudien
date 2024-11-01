@@ -368,3 +368,17 @@ t.test(deltaKLG1, deltaKLG2, alternative = "greater",
        var.equal = TRUE)
     # p-Wert = 0.783
     # H0 kann nicht abgelehnt werden
+
+#########################################################
+
+qqnorm(dataD1GU$KL)
+qqline(dataD1GU$KL)
+
+
+m = summary(dataD1$KL)[4]
+s = sd(dataD1$KL)
+hist(dataD1$KL,
+     freq = FALSE)
+
+points(dnorm(seq(-10, 10, 0.5), 0, s), type = "l")
+

@@ -1,24 +1,23 @@
 TODO:
 
-- "Forschungsfrage"/"Motivation" anschauen
-- Jeder schaut deskriptiv ALLE Variable an und überlegt wie er sie beschreiben würde (Rohdaten)
-	-> Donnerstag zusammentragen
-	-> In gemeinsamer R-Datei festhalten
 - Quellen für Tests raussuchen
+	- allgemein Tests
 	Liste an Tests:
 		t-Test
 		f-Test
-		Shapiro-Wilk Test
+		Shapiro-Wilk Test !!!!!!!!!!!!!!!!!!!
 
 
-FRAGEN:
+FRAGEN (beantwortet):
 
 - Soll/Darf in univariater Deskription schon nach Gruppen/Durchgängen aufgeteilt werden oder nicht?
+	-> uns ziemlich frei überlassen
 	(z.B. die Bearbeitungszeit)
 - Erklärung was ein statistischer Test ist?
 - Wie genau müssen Tests erklärt werden
 - Wie motiviert man Tests
+	-> Hypothesen und Tests sollten allgemein (ziemlich genau) eingeführt werden (vor speziellen Tests)
 - Wie muss man Verteilungen einführen? (Normalverteilung!)
-	(-> um zu motivieren was man tut)
-- Welche Deskriptionen gehören in Unterkapitel 4.1
+	-> Verteilungen müssen (vermutlich) nicht eingeführt werden
+Deskriptionen gehören in Unterkapitel 4.1
 	(und welche dann evtl erst später wenn sie genutzt werden (z.B. Differenzen zw. KL))
