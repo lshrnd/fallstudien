@@ -1,0 +1,41 @@
+Shapiro-Wilk:
+
+Einführung in die nichtparametrische Statistik 2008 S.121 Shapiro-Wilk-Test
+-> Hypothese, Teststatisik, erwähnt Gewichte aber werden nicht erklärt
+
+Royston 82 Extension: erklärt wie die Gewichte approximiert werden    
+
+Kritische Werte in Shapiro und Wilk 1965 S. 605                                                                                                                                                                                                           
+
+Shapiro-Francia: alternative zu shapiro-wilk, Test auf normalverteilung
+
+
+
+###### Daniels weise Worte ######
+wenn daten nicht normalverteilt dann geht power von t-test runter, 
+weil t-test: test-Statistik muss t-verteilt (gegeben wenn daten normalverteilt)
+
+hinreichend: teststatistik normal verteilt (zentraler grenzwertsatz)
+
+
+Shapiro-Wilk: guckt in bestimmte Richtungen und überprüft ob da die Abweichungen zu groß sind als dass es normalverteilt
+sein könnte, sagt aber nicht unbedingt was aus über andere Bereiche
+
+
+oder Normalverteilungsannahme überprüfen mit: qq plot mit konfidenzbereichen, kolmogoroff-smirnov test, irgein test mit Wölbung und Kurtosis
+
+
+Problem: geschachtelte Tests verlieren an power (vllt f-test weglassen und direkt welch-test?)
+
+Unabhängigkeit der daten argumentieren (muss nur unabhängig genug sein), argumentieren über versuchsaufbau
+oder sogar Index gegen Werte plotten
+
+identisch verteilt auch über versuchsaufbau
+
+Deskription sollte die zentralen Fragestellungen beantworten (oder die antwort unterstützen), kann auch direkt qq plot sein. alles was nicht zielführend ist weglassen. nicht für jede variable Histogramm hinklatschen
+entweder: Deskription komplett, Tests komplett ODER nach aufgabenteile; je nach Fragestellung entscheiden
+
+
+
+
+
