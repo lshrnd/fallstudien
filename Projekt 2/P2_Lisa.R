@@ -66,6 +66,18 @@ hist(data_g2$KL[data_g2$durchgang == 2],
      col = cols_durchg2[2],
      freq = F)
 
+## 
+par(mfrow=c(1,1), mar = c(2,2,2,2))
+# fuer ersten test, noch mit ausreiﬂer, da man da auch gut erkennt, danach rausnehmen
+qqnorm(data_g1$KL[data_g1$durchgang == 1])
+qqline(data_g1$KL[data_g1$durchgang == 1])
+
+
+qqnorm(data_g2$KL[data_g2$durchgang == 1])
+qqline(data_g2$KL[data_g2$durchgang == 1])
+
+
+
 
 # fuer Bearbeitungszeit analog 
 par(mfrow=c(2,1), mar = c(2,2,2,2))
@@ -138,9 +150,9 @@ barplot(rbind(aa_g2d1,aa_g2d2),
 ## fuer AF analog
 par(mfrow=c(2,1), mar = c(2,2,2,2))
 af_g1d1 = table(factor(data_g1$AF[data_g1$durchgang == 1], 
-                       levels = c(0:3,40:45)))
+                       levels = c(0:3,41:44)))
 af_g1d2 = table(factor(data_g1$AF[data_g1$durchgang == 2], 
-                       levels = c(0:3,40:45)))
+                       levels = c(0:3,41:44)))
 barplot(rbind(af_g1d1,af_g1d2), 
         beside = T, 
         col = cols_durchg, 
@@ -148,9 +160,9 @@ barplot(rbind(af_g1d1,af_g1d2),
         ylim = c(0,20))
 
 af_g2d1 = table(factor(data_g2$AF[data_g2$durchgang == 1], 
-                       levels = 0:50))
+                       levels = c(0:3,41:44)))
 af_g2d2 = table(factor(data_g2$AF[data_g2$durchgang == 2], 
-                       levels = 0:50))
+                       levels = c(0:3,41:44)))
 barplot(rbind(af_g2d1,af_g2d2), 
         beside = T, 
         col = cols_durchg, 
@@ -235,4 +247,5 @@ var.test(deltaKL_g1,deltaKL_g2,
 t.test(deltaKL_g1,deltaKL_g2, 
        alternative = "greater", 
        var.equal = T)
+
 
