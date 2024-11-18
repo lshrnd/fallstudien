@@ -333,7 +333,8 @@ shapiro.test(deltaB)
   # H0 deltaB >= 0  vs  H1: deltaB < 0
 t.test(deltaB, alternative = "less", mu = 0)
 
-
+qqnorm(deltaB)
+abline(mean(deltaB), sd(deltaB))
 
   # AUFGABENTEIL 3
 
@@ -371,8 +372,80 @@ t.test(deltaKLG1, deltaKLG2, alternative = "greater",
 
 #########################################################
 
+
+#quantile(dataD1GU$KL, type = 2)
+
+## normal QQ-Plot:
+
+# y-Koordinate: Sample Quantile / sorted Sample Values
+# x-Koordinate: theoretische p-Quantile der N(0,1) Vtlg,
+#               für p entsprechend dem p der sampleQuantile (berechnet mit ppoints)
+
+# INTERPRETATION:
+#
+# Wenn die Punkte auf der Winkelhalbierenden liegen kann man eine N(0,1) Vtlg vermuten
+# Wenn die Punkte auf einer Linie liegen dann eine lineare Trafo der N(0,1) Vtlg
+#   d.h. N(mu, sigma)
+
+#### Wie geht ein QQ Plot? #####
 qqnorm(dataD1GU$KL)
-qqline(dataD1GU$KL)
+qqline(dataD1GU$KL,
+       probs = c(0.25, 0.75),
+       distribution = qnorm,
+       qtype = 2
+       )
+
+sq = sort(dataD1GU$KL)  # these are the sample quantiles "y-positions"
+ppoints(20) # gibt das "p" an (aus p-Quantil) für das theoretisches Quantil
+            # berechnet werden soll, welches dann die "x-Position" darstellt
+tq = qnorm(ppoints(20))  # gibt die x-Position an
+# hier 20, weil lengtH(dataD1GU$KL) = 20 
+
+plot(tq, sq)  # entspricht plot aus qqnorm
+
+
+# Idee gerade aus mittelwert = y-Achsenacbschnitt und sd = Steigung
+# als Referenz
+abline(mean(dataD1GU$KL), 
+       sd(dataD1GU$KL),
+       col = "red"
+       )
+
+
+  # Lineares Modell und einfacher Konfidenzstreifen für qq plot von dataD1GU$KL
+  # wäre viel zu kompliziert und würde methodenteil zu lang machen und ist
+  # außerdem mega unnötig - da ich im lm ja auch eine NV annehme...
+qqModel = lm(sq ~ tq)
+qqModel$coefficients
+abline(qqModel$coefficients, col = "blue")
+
+sigma_sq_hat_2 = sum(qqModel$residuals^2) / (20 - 1 - 1)
+
+X = cbind(1, sq)
+C2 = solve(t(X) %*% X)
+
+alpha = 0.05
+tquantile = qt(1 - alpha / 2, df = 20 - 1 - 1)
+g1 = function(xStar) {
+  tquantile * sqrt(sigma_sq_hat_2 * (c(1, xStar) %*% C2 %*% c(1, xStar)))
+}
+
+
+tq_star = as.data.frame(tq)
+sq_star = predict(qqModel, tq_star)
+
+simpleKIStreifenLower = sq_star - sapply(tq_star$tq, g1) # Untere Grenze Einfacher KI Streifen
+simpleKIStreifenUpper = sq_star + sapply(tq_star$tq, g1) # Obere  Grenze Einfacher KI Streifen
+
+points(tq_star$tq, simpleKIStreifenLower, col = "black", type = "l")
+points(tq_star$tq, simpleKIStreifenUpper, col = "black", type = "l")
+
+
+
+qqplot(tq, sq, conf.level = 0.05)
+
+
+### Versuch
 
 
 m = summary(dataD1$KL)[4]
@@ -381,4 +454,22 @@ hist(dataD1$KL,
      freq = FALSE)
 
 points(dnorm(seq(-10, 10, 0.5), 0, s), type = "l")
+  
 
+
+##### Versuch ###
+
+qSd4 = qnorm(ppoints(20), sd = 4)
+
+plot(tq, qSd4)
+abline(0, 1)
+abline(0, 4, col = "red")
+
+eQ = qexp(ppoints(20))
+
+plot(tq, eQ)
+
+# qqline (qtype = 2 ! )
+qqline(dataD1GU$KL,
+       qtype = 2
+)
