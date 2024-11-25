@@ -21,8 +21,10 @@ apply(data_raw,2,var,na.rm = T)
 # in Bericht als Tabelle 
 
 # Boxplot der Längen aufgeteilt nach Vogel
-boxplot(length ~ bird, data = data_sep, horizontal = T)
-stripchart(length ~ bird, data = data_sep, add = T, pch = 18, col = "darkblue")
+boxplot(length ~ bird, data = data_sep, horizontal = F)
+stripchart(length ~ bird, data = data_sep, add = T, pch = 1,
+           vertical = T, method = "jitter", jitter = 0.15)
+
 
 
 ### Testen auf NV-Annahme
