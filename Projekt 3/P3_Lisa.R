@@ -21,12 +21,31 @@ apply(data_raw,2,var,na.rm = T)
 # in Bericht als Tabelle 
 
 # Boxplot der Längen aufgeteilt nach Vogel
-boxplot(length ~ bird, data = data_sep, horizontal = F)
-stripchart(length ~ bird, data = data_sep, add = T, pch = 1,
-           vertical = T, method = "jitter", jitter = 0.15)
+pdf(file  = "3_Boxplot.pdf", width = 10)
+par(mar=c(4.5, 5, 1.5, 2), family = "serif")
+boxplot(length ~ bird, 
+        data = data_sep, 
+        horizontal = F,
+        xlab = "Vogelart",
+        ylab = "Länge in mm",
+        cex.lab = 1.6,
+        cex.axis = 1.6,
+        # outline= F,
+        # ylim = c(19,25)
+        )
 
+stripchart(length ~ bird, 
+           data = data_sep, 
+           add = T, 
+           pch = 20,
+           vertical = T, 
+           method = "jitter", 
+           jitter = 0.15,
+           cex = 1.6)
 
+dev.off()
 
+#################################################################
 ### Testen auf NV-Annahme
 shapiro.test(data$WP)
 shapiro.test(data$BP)
@@ -51,7 +70,6 @@ t.test(data$BP, data$RK)
 t.test(data$BP, data$ZK)
 t.test(data$RK, data$ZK)
 
-
 t.test(data$WP, data$BP, var.equal = T)
 t.test(data$WP, data$RK, var.equal = T)
 t.test(data$WP, data$ZK, var.equal = T)
@@ -65,6 +83,6 @@ summary(aov(length ~ bird, data_sep[c(1:60,77:91),])) # 1 = 2 = 4
 summary(aov(length ~ bird, data_sep[c(1:45,61:91),])) # 1 = 3 = 4
 summary(aov(length ~ bird, data_sep[46:91,])) # 2 = 3 = 4
 
-
 summary(aov(length~bird, data_sep))
+
 
