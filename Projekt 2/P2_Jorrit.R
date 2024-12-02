@@ -173,7 +173,7 @@ text(x = cumsum(htAF) - 1,
      y = 3,
      labels = names(htAF)
      )
-.
+
 
     # KL (Konzentrationsleistung)
 
@@ -304,8 +304,21 @@ n
 
 ### Tests fuer Aufgabe 1 ###
 
-# TODO
 
+## Aufgabe 1: durchgang 1 - gruppen unterscheidung 
+
+### Test 2 f test auf gleiche varianzen
+var.test(dataG1D1$KL,
+         dataG2D1$KL)
+
+#### test 3 zweistichproben t test auf gleiche mittelwerte
+
+# H_0 : dataG1D1$KL = dataG2D1$KL vs
+# H_1 : dataG1D1$KL =/= dataG2D1$KL
+
+t.test(dataG1D1$KL,
+       dataG2D1$KL, 
+       var.equal = T)
 
 
 ### Test fuer Aufgabe 2 ###
@@ -313,6 +326,20 @@ n
 ## Konzentrationsleistung
 
 # TODO
+
+### Test 2 f test auf gleiche varianzen
+var.test(dataD1$KL, dataD2$KL, 
+         alternative = "two.sided")
+#### test 3 zweistichproben t test auf gleiche mittelwerte
+
+# H_0 : dataD1$KL <= dataD2$KL vs
+# H_1 : dataD1$KL <  dataD2$KL
+
+
+t.test(dataD1$KL, dataD2$KL, 
+       alternative = "greater", 
+       paired = T)
+
 
 ## Bearbeitungszeit
 
@@ -473,3 +500,14 @@ plot(tq, eQ)
 qqline(dataD1GU$KL,
        qtype = 2
 )
+
+
+qqnorm(log(dataD1$B))
+qqnorm(dataD1$B)
+
+
+qqnorm(log(dataD2$B))
+qqnorm(dataD2$B)
+
+shapiro.test(dataD1$B)
+shapiro.test(log(dataD1$B))
