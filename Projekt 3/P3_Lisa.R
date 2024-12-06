@@ -11,25 +11,34 @@ data = list("WP" = data_raw[,1],
 
 data_sep = data.frame("bird" = c(rep("WP",45),rep("BP",15),rep("RK",16),rep("ZK",15)),
                         length = c(data$WP,data$BP,data$RK,data$ZK))
-  
+
+data_sep$bird = factor(data_sep$bird, levels = c("WP","BP","RK","ZK"))
+
+kennzahlen = function(x){
+  c("min" = min(x, na.rm = T),
+    "max" = max(x, na.rm = T),
+    "mean" = mean(x, na.rm = T),
+    "var" = var(x, na.rm = T),
+    "iqr" = IQR(x, type = 2, na.rm = T)
+    )
+}
+
 }
 
 ### Deskription
-apply(data_raw,2,summary, na.rm = T, quantile.type = 2)
-apply(data_raw,2,sd, na.rm = T)
-apply(data_raw,2,var,na.rm = T)
-# in Bericht als Tabelle 
+apply(data_raw,2,kennzahlen)
 
 # Boxplot der Längen aufgeteilt nach Vogel
 pdf(file  = "3_Boxplot.pdf", width = 10)
 par(mar=c(4.5, 5, 1.5, 2), family = "serif")
+
 boxplot(length ~ bird, 
         data = data_sep, 
         horizontal = F,
         xlab = "Vogelart",
         ylab = "Länge in mm",
         cex.lab = 1.6,
-        cex.axis = 1.6,
+        cex.axis = 1.6
         # outline= F,
         # ylim = c(19,25)
         )
@@ -45,6 +54,56 @@ stripchart(length ~ bird,
 
 dev.off()
 
+# QQ-Plots der Stichproben
+pdf(file = "3_QQPlots.pdf", width = 12, height = 10)
+{
+  par(mfrow=c(2,2), mar = c(5.5, 6, 2, 2), family = "serif")
+  qqnorm(data$WP,
+         main = "Wiesenpieper",
+         xlab = expression("theoretische Quantile von" ~ N(0,1)),
+         ylab = "Quantile der Stichprobe",
+         cex.lab = 2.2,
+         cex.axis = 2.2,
+         cex.main = 2.2)
+  abline(mean(data$WP),
+         sd(data$WP))
+  
+  
+  qqnorm(data$BP,
+         main = "Baumpieper",
+         xlab = expression("theoretische Quantile von" ~ N(0,1)),
+         ylab = "Quantile der Stichprobe",
+         cex.lab = 2.2,
+         cex.axis = 2.2,
+         cex.main = 2.2)
+  abline(mean(data$BP),
+         sd(data$BP))
+  
+  
+  qqnorm(data$RK,
+         main = "Rotkehlchen",
+         xlab = expression("theoretische Quantile von" ~ N(0,1)),
+         ylab = "Quantile der Stichprobe",
+         cex.lab = 2.2,
+         cex.axis = 2.2,
+         cex.main = 2.2)
+  abline(mean(data$RK),
+         sd(data$ZK))
+  
+  
+  qqnorm(data$ZK,
+         main = "Zaunkönig",
+         xlab = expression("theoretische Quantile von" ~ N(0,1)),
+         ylab = "Quantile der Stichprobe",
+         cex.lab = 2.2,
+         cex.axis = 2.2,
+         cex.main = 2.2)
+  abline(mean(data$ZK),
+         sd(data$ZK))
+}
+dev.off()
+
+
 #################################################################
 ### Testen auf NV-Annahme
 shapiro.test(data$WP)
@@ -58,6 +117,7 @@ ks.test(data$BP,"pnorm",mean(data$BP),sd(data$BP))
 ks.test(data$RK,"pnorm",mean(data$RK),sd(data$RK))
 ks.test(data$ZK,"pnorm",mean(data$ZK),sd(data$ZK))
 # alle p-Werte > 0.28
+#############
 
 ### Abschlusstestverfahren
 
