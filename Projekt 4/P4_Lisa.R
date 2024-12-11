@@ -1,5 +1,7 @@
+{ #-#
 library(readxl)
 library(crayon)
+library(scales)
 setwd("C:/Users/lisah/Documents/GitHub/fallstudien/Projekt 4")
 data = read_xlsx("Medaillen.xlsx")
 
@@ -63,14 +65,34 @@ giveExpected = function(table){
   cat(result2)
 }
 
+landNames = unique(data$Land)
+landCols = alpha(c("USA" = "purple",
+                   "VR China" = "red",
+                   "Japan" = "white",
+                   "Australien" = "green",
+                   "Frankreich"= "blue"),
+                 0.5)
+
+sportNames = unique(data$Sportart)
+sportCols = grey.colors(4)
+
+medalNames = c("Gold","Silber","Bronze")
+medalCols = c("#FDC961","#E5E4E4","#DCB386")
+
+} #-#
+
 
 ### Aufgabe 1:
 medalCountTotal = t(matrix(data$Total, nrow = 4, ncol = 5))
-rownames(medalCountTotal) = unique(data$Land)
-colnames(medalCountTotal) = unique(data$Sportart)
+rownames(medalCountTotal) = landNames
+colnames(medalCountTotal) = sportNames
 
 giveExpected(medalCountTotal)
 myChisqTest(medalCountTotal,0.05)
+
+chisq.test(medalCountTotal)$expected
+
+myChisqTest(medalCountTotal * 10, 0.05)
 
 
 
@@ -78,65 +100,128 @@ myChisqTest(medalCountTotal,0.05)
 
 # Medaillenspiegel fuer Kampfsport
 medalCountKampfsport = as.matrix(subset(data, Sportart == "Kampfsport")[,3:5])
-rownames(medalCountKampfsport) = unique(data$Land)
+rownames(medalCountKampfsport) = landNames
 
 giveExpected(medalCountKampfsport)
 myChisqTest(medalCountKampfsport, 0.05)
+fisher.test(medalCountKampfsport)
 
 # Medaillenspiegel fuer Leichtathletik
 medalCountLeichtathletik = as.matrix(subset(data, Sportart == "Leichtathletik")[,3:5])
-rownames(medalCountLeichtathletik) = unique(data$Land)
+rownames(medalCountLeichtathletik) = landNames
 
 giveExpected(medalCountLeichtathletik)
 myChisqTest(medalCountLeichtathletik, 0.05)
+fisher.test(medalCountLeichtathletik)
 
 # Medaillenspiegel fuer Ballsportart
 medalCountBallsportart = as.matrix(subset(data, Sportart == "Ballsportart")[,3:5])
-rownames(medalCountBallsportart) = unique(data$Land)
+rownames(medalCountBallsportart) = landNames
 
 giveExpected(medalCountBallsportart)
 myChisqTest(medalCountBallsportart, 0.05)
+fisher.test(medalCountBallsportart) # lehnt ab
 
 # Medaillenspiegel fuer Schwimmen
 medalCountSchwimmen = as.matrix(subset(data, Sportart == "Schwimmen")[,3:5])
-rownames(medalCountSchwimmen) = unique(data$Land)
+rownames(medalCountSchwimmen) = landNames
 
 giveExpected(medalCountSchwimmen)
 myChisqTest(medalCountSchwimmen, 0.05)
+fisher.test(medalCountSchwimmen)
 
 ### Aufgabe 3:
 
 # Medaillenspiegel fuer USA
 medalCountUSA = as.matrix(subset(data, Land == "USA")[,3:5])
-rownames(medalCountUSA) = unique(data$Sportart)
+rownames(medalCountUSA) = sportNames
 
 giveExpected(medalCountUSA)
 myChisqTest(medalCountUSA, 0.05)
+fisher.test(medalCountUSA)
 
 # Medaillenspiegel fuer VR China
 medalCountChina = as.matrix(subset(data, Land == "VR China")[,3:5])
-rownames(medalCountChina) = unique(data$Sportart)
+rownames(medalCountChina) = sportNames
 
 giveExpected(medalCountChina)
 myChisqTest(medalCountChina, 0.05)
+fisher.test(medalCountChina) # lehnt ab
 
 # Medaillenspiegel fuer Japan
 medalCountJapan = as.matrix(subset(data, Land == "Japan")[,3:5])
-rownames(medalCountJapan) = unique(data$Sportart)
+rownames(medalCountJapan) = sportNames
 
 giveExpected(medalCountJapan)
 myChisqTest(medalCountJapan, 0.05)
+fisher.test(medalCountJapan) # lehnt ab
 
 # Medaillenspiegel fuer Australien
 medalCountAustralien = as.matrix(subset(data, Land == "Australien")[,3:5])
-rownames(medalCountAustralien) = unique(data$Sportart)
+rownames(medalCountAustralien) = sportNames
 
 giveExpected(medalCountAustralien)
 myChisqTest(medalCountAustralien, 0.05)
+fisher.test(medalCountAustralien)
 
 # Medaillenspiegel fuer Frankreich
 medalCountFrankreich = as.matrix(subset(data, Land == "Frankreich")[,3:5])
-rownames(medalCountFrankreich) = unique(data$Sportart)
+rownames(medalCountFrankreich) = sportNames
 
 giveExpected(medalCountFrankreich)
 myChisqTest(medalCountFrankreich, 0.05)
+fisher.test(medalCountFrankreich)
+
+############ Deskription
+
+# Barplot Medaillen Total nach Sportart aufgeteilt
+barplot(medalCountTotal, 
+        beside = T,
+        ylim = c(0,40),
+        col = landCols)
+legend("top", ncol = 5, legend = landNames, col = landCols, 
+       pch = 15, x.intersp = 0.8, y.intersp = 0.6)
+
+# Barplot Medaillen Total nach Land aufgeteilt
+barplot(t(medalCountTotal), 
+        beside = T,
+        ylim = c(0,40),
+        col = sportCols)
+legend("top", ncol = 4, legend = sportNames, pt.bg = sportCols, 
+       pch = 22, x.intersp = 0.8, y.intersp = 0.6)
+
+  # oder Gesamtsumme an Medaillen
+barplot(margin.table(medalCountTotal,1),
+        col = landCols)
+
+# Barplot für jede Sportart nach Land aufgeteilt
+{
+barplot(t(medalCountKampfsport),
+        beside = T,
+        ylim = c(0,15),
+        col = medalCols)
+legend("top", ncol = 3, legend = medalNames, pt.bg = medalCols, 
+       pch = 22, x.intersp = 0.8, y.intersp = 0.6)
+
+barplot(t(medalCountLeichtathletik),
+        beside = T,
+        ylim = c(0,15),
+        col = medalCols)
+legend("top", ncol = 3, legend = medalNames, pt.bg = medalCols, 
+       pch = 22, x.intersp = 0.8, y.intersp = 0.6)
+
+barplot(t(medalCountBallsportart),
+        beside = T,
+        ylim = c(0,15),
+        col = medalCols)
+legend("top", ncol = 3, legend = medalNames, pt.bg = medalCols, 
+       pch = 22, x.intersp = 0.8, y.intersp = 0.6)
+
+barplot(t(medalCountSchwimmen),
+        beside = T,
+        ylim = c(0,15),
+        col = medalCols)
+legend("top", ncol = 3, legend = medalNames, pt.bg = medalCols, 
+       pch = 22, x.intersp = 0.8, y.intersp = 0.6)
+}
+
