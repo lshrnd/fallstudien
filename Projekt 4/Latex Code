@@ -1,0 +1,32 @@
+\begin{frame}{Kontingenztafel % Kathi 
+		\\
+    \small{Fahrmeir, 2023, S.117}}
+    Eine $(k \times m)$-Kontigenztafel der \textsl{absoluten Häufigkeiten} gibt die gemeinsame Verteilung der Merkmale $X$ und $Y$  wieder.
+    \[
+    \begin{array}{c|cccc|c}
+    	& b_1 & b_2 & \cdots & b_m & \\
+    	\hline
+    	a_1 & h_{11} & h_{12} & \cdots & h_{1m} & h_{1.} \\
+    	a_2 & h_{21} & h_{22} & \cdots & h_{2m} & h_{2.} \\
+    	\vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+    	a_k & h_{k1} & h_{k2} & \cdots & h_{km} & h_{k.} \\
+    	\hline
+    	& h_{.1} & h_{.2} & \cdots & h_{.m} & n  	
+    \end{array}
+    \]
+    
+    Dabei bezeichnen
+    \begin{itemize}
+    	\item $h_{ij} = h(a_i, b_j)$ die absolute Häufigkeit der Kombination $(a_i, b_j)$,
+    	\item $h_{i.} = \sum_{j=1}^m h_{ij}$ die Randhäufigkeiten von $X$ und
+    	\item $h_{.j} = \sum_{i=1}^k h_{ij}$ die Randhäufigkeiten von $Y$.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Unabhängigkeit % Kathi
+		\\
+		\small{Fahrmeir, 2023, S.219}}
+    Für zwei Mermale $X$ und $Y$ gilt: \\
+    X und Y sind unabhängig 
+    $\iff P(X=i, Y=j) = P(X=i)*P(Y=j) \hspace{1em} \forall \; i,j$
+\end{frame}
