@@ -2,9 +2,12 @@
 library(readxl)
 library(crayon)
 library(scales)
+
 setwd("C:/Users/lisah/Documents/GitHub/fallstudien/Projekt 4")
 data = read_xlsx("Medaillen.xlsx")
 
+# fuer pdfs exportieren
+setwd("C:/Users/lisah/OneDrive/DSStudium/Fallstudien I")
 
 ### chi^2-Test (analog zu chisq.test(), mir war langweilig man ich weiss doch auch nicht)
 # testet H0: Merkmale X und Y sind unabhängig
@@ -65,6 +68,38 @@ giveExpected = function(table){
   cat(result2)
 }
 
+teststat = function(table){
+  n_X = margin.table(table,1) # Zeilensummen
+  n_Y = margin.table(table,2) # Spaltensummen
+  n = sum(table) # Gesamtsumme
+  table_expected = outer(n_X, n_Y)/n # erwartete Tafel im Falle der Unabh.
+  
+  stat = sum(((table - table_expected)^2)/table_expected)
+}
+
+# macht nur Schwachsinn, diese Funktion smh
+permutationTest = function(table, repCount, alpha = 0.05){
+  teststats = rep(NA,repCount)
+  
+  for(i in 1:repCount){
+    order = sample(ncol(table))
+    newTable = matrix(nrow = nrow(table), ncol = ncol(table), table[,order])
+    teststats[i] = teststat(newTable)
+  }
+  
+  unpermutatedTeststat = teststat(table)
+  
+  index = which.min(sort(teststats) >= unpermutatedTeststat)
+  p = index / repCount
+  
+  if(p < alpha) result = red("H0 ablehnen") else result = green("H0 beibehalten")
+  
+  cat("Permutated Chi-Squared-Test for:", deparse(substitute(table)), "\n \n")
+  cat("Teststatistik:", unpermutatedTeststat, "             p-Wert:", p, "\n")
+  cat("                                 Testentscheidung:", result)
+  print(teststats)
+}
+
 landNames = unique(data$Land)
 landCols = alpha(c("USA" = "purple",
                    "VR China" = "red",
@@ -79,6 +114,8 @@ sportCols = grey.colors(4)
 medalNames = c("Gold","Silber","Bronze")
 medalCols = c("#FDC961","#E5E4E4","#DCB386")
 
+myRepCount = 10000
+
 } #-#
 
 
@@ -89,10 +126,8 @@ colnames(medalCountTotal) = sportNames
 
 giveExpected(medalCountTotal)
 myChisqTest(medalCountTotal,0.05)
-
-chisq.test(medalCountTotal)$expected
-
-myChisqTest(medalCountTotal * 10, 0.05)
+fisher.test(medalCountTotal)
+chisq.test(medalCountTotal, simulate.p.value = T)
 
 
 
@@ -105,6 +140,7 @@ rownames(medalCountKampfsport) = landNames
 giveExpected(medalCountKampfsport)
 myChisqTest(medalCountKampfsport, 0.05)
 fisher.test(medalCountKampfsport)
+chisq.test(medalCountKampfsport, simulate.p.value = T)
 
 # Medaillenspiegel fuer Leichtathletik
 medalCountLeichtathletik = as.matrix(subset(data, Sportart == "Leichtathletik")[,3:5])
@@ -113,6 +149,7 @@ rownames(medalCountLeichtathletik) = landNames
 giveExpected(medalCountLeichtathletik)
 myChisqTest(medalCountLeichtathletik, 0.05)
 fisher.test(medalCountLeichtathletik)
+chisq.test(medalCountLeichtathletik, simulate.p.value = T)
 
 # Medaillenspiegel fuer Ballsportart
 medalCountBallsportart = as.matrix(subset(data, Sportart == "Ballsportart")[,3:5])
@@ -121,6 +158,8 @@ rownames(medalCountBallsportart) = landNames
 giveExpected(medalCountBallsportart)
 myChisqTest(medalCountBallsportart, 0.05)
 fisher.test(medalCountBallsportart) # lehnt ab
+# China hat mehr als erwartet
+chisq.test(medalCountBallsportart, simulate.p.value = T)
 
 # Medaillenspiegel fuer Schwimmen
 medalCountSchwimmen = as.matrix(subset(data, Sportart == "Schwimmen")[,3:5])
@@ -147,6 +186,7 @@ rownames(medalCountChina) = sportNames
 giveExpected(medalCountChina)
 myChisqTest(medalCountChina, 0.05)
 fisher.test(medalCountChina) # lehnt ab
+# China ist besser im Ballsport als erwartet, rest passt ca 
 
 # Medaillenspiegel fuer Japan
 medalCountJapan = as.matrix(subset(data, Land == "Japan")[,3:5])
@@ -155,6 +195,7 @@ rownames(medalCountJapan) = sportNames
 giveExpected(medalCountJapan)
 myChisqTest(medalCountJapan, 0.05)
 fisher.test(medalCountJapan) # lehnt ab
+# Japan hat etwas weniger Gold in Kampf und etwas mehr in Ball
 
 # Medaillenspiegel fuer Australien
 medalCountAustralien = as.matrix(subset(data, Land == "Australien")[,3:5])
@@ -195,33 +236,40 @@ barplot(margin.table(medalCountTotal,1),
         col = landCols)
 
 # Barplot für jede Sportart nach Land aufgeteilt
+pdf(file = "4_Barplots_medalCountSportart.pdf", width = 10, height = 6)
+par(mfrow = c(2,2), mar = c(2.5,3,3,2))
 {
 barplot(t(medalCountKampfsport),
         beside = T,
         ylim = c(0,15),
-        col = medalCols)
+        col = medalCols,
+        main = "Kampfsport")
 legend("top", ncol = 3, legend = medalNames, pt.bg = medalCols, 
        pch = 22, x.intersp = 0.8, y.intersp = 0.6)
 
 barplot(t(medalCountLeichtathletik),
         beside = T,
         ylim = c(0,15),
-        col = medalCols)
+        col = medalCols,
+        main = "Leichtathletik")
 legend("top", ncol = 3, legend = medalNames, pt.bg = medalCols, 
        pch = 22, x.intersp = 0.8, y.intersp = 0.6)
 
 barplot(t(medalCountBallsportart),
         beside = T,
         ylim = c(0,15),
-        col = medalCols)
+        col = medalCols,
+        main = "Ballsportart")
 legend("top", ncol = 3, legend = medalNames, pt.bg = medalCols, 
        pch = 22, x.intersp = 0.8, y.intersp = 0.6)
 
 barplot(t(medalCountSchwimmen),
         beside = T,
         ylim = c(0,15),
-        col = medalCols)
+        col = medalCols,
+        main = "Schwimmen")
 legend("top", ncol = 3, legend = medalNames, pt.bg = medalCols, 
        pch = 22, x.intersp = 0.8, y.intersp = 0.6)
 }
+dev.off()
 
