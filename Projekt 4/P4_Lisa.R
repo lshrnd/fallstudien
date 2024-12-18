@@ -237,39 +237,47 @@ barplot(margin.table(medalCountTotal,1),
 
 # Barplot für jede Sportart nach Land aufgeteilt
 pdf(file = "4_Barplots_medalCountSportart.pdf", width = 10, height = 6)
-par(mfrow = c(2,2), mar = c(2.5,3,3,2))
 {
+par(mfrow = c(2,2), mar = c(2,2,2.5,0))
 barplot(t(medalCountKampfsport),
         beside = T,
         ylim = c(0,15),
         col = medalCols,
-        main = "Kampfsport")
+        main = "Kampfsport",
+        cex.names = 1.2,
+        cex.main = 1.35)
 legend("top", ncol = 3, legend = medalNames, pt.bg = medalCols, 
-       pch = 22, x.intersp = 0.8, y.intersp = 0.6)
+       pch = 22, x.intersp = 0.8, y.intersp = 0.6, cex = 1.2)
 
 barplot(t(medalCountLeichtathletik),
         beside = T,
         ylim = c(0,15),
         col = medalCols,
-        main = "Leichtathletik")
+        main = "Leichtathletik",
+        cex.names = 1.2,
+        cex.main = 1.35)
 legend("top", ncol = 3, legend = medalNames, pt.bg = medalCols, 
-       pch = 22, x.intersp = 0.8, y.intersp = 0.6)
+       pch = 22, x.intersp = 0.8, y.intersp = 0.6, cex = 1.2)
 
 barplot(t(medalCountBallsportart),
         beside = T,
         ylim = c(0,15),
         col = medalCols,
-        main = "Ballsportart")
+        main = "Ballsportart",
+        cex.names = 1.2,
+        cex.main = 1.35)
 legend("top", ncol = 3, legend = medalNames, pt.bg = medalCols, 
-       pch = 22, x.intersp = 0.8, y.intersp = 0.6)
+       pch = 22, x.intersp = 0.8, y.intersp = 0.6, cex = 1.2)
 
 barplot(t(medalCountSchwimmen),
         beside = T,
         ylim = c(0,15),
         col = medalCols,
-        main = "Schwimmen")
+        main = "Schwimmen",
+        cex.names = 1.2,
+        cex.main = 1.35)
 legend("top", ncol = 3, legend = medalNames, pt.bg = medalCols, 
-       pch = 22, x.intersp = 0.8, y.intersp = 0.6)
+       pch = 22, x.intersp = 0.8, y.intersp = 0.6, cex = 1.2)
 }
 dev.off()
 
