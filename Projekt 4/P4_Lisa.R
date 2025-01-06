@@ -5,6 +5,8 @@ library(scales)
 
 setwd("C:/Users/lisah/Documents/GitHub/fallstudien/Projekt 4")
 data = read_xlsx("Medaillen.xlsx")
+data$Land = rep(c("USA","CHN","JPN","AUS","FRA"), each = 4)
+data$Sportart = rep(c("Kampfsport","Leichtathletik","Ballsport","Schwimmsport"),5)
 
 # fuer pdfs exportieren
 setwd("C:/Users/lisah/OneDrive/DSStudium/Fallstudien I")
@@ -101,12 +103,12 @@ permutationTest = function(table, repCount, alpha = 0.05){
 }
 
 landNames = unique(data$Land)
-landCols = alpha(c("USA" = "purple",
-                   "VR China" = "red",
-                   "Japan" = "white",
-                   "Australien" = "green",
-                   "Frankreich"= "blue"),
-                 0.5)
+# landCols = alpha(c("USA" = "purple",
+#                    "VR China" = "red",
+#                    "Japan" = "white",
+#                    "Australien" = "green",
+#                    "Frankreich"= "blue"),
+#                  0.5)
 
 sportNames = unique(data$Sportart)
 sportCols = grey.colors(4)
@@ -126,8 +128,8 @@ colnames(medalCountTotal) = sportNames
 
 giveExpected(medalCountTotal)
 myChisqTest(medalCountTotal,0.05)
-fisher.test(medalCountTotal)
-chisq.test(medalCountTotal, simulate.p.value = T)
+#fisher.test(medalCountTotal)
+#chisq.test(medalCountTotal, simulate.p.value = T)
 
 
 
@@ -140,7 +142,7 @@ rownames(medalCountKampfsport) = landNames
 giveExpected(medalCountKampfsport)
 myChisqTest(medalCountKampfsport, 0.05)
 fisher.test(medalCountKampfsport)
-chisq.test(medalCountKampfsport, simulate.p.value = T)
+#chisq.test(medalCountKampfsport, simulate.p.value = T)
 
 # Medaillenspiegel fuer Leichtathletik
 medalCountLeichtathletik = as.matrix(subset(data, Sportart == "Leichtathletik")[,3:5])
@@ -149,20 +151,20 @@ rownames(medalCountLeichtathletik) = landNames
 giveExpected(medalCountLeichtathletik)
 myChisqTest(medalCountLeichtathletik, 0.05)
 fisher.test(medalCountLeichtathletik)
-chisq.test(medalCountLeichtathletik, simulate.p.value = T)
+#chisq.test(medalCountLeichtathletik, simulate.p.value = T)
 
 # Medaillenspiegel fuer Ballsportart
-medalCountBallsportart = as.matrix(subset(data, Sportart == "Ballsportart")[,3:5])
+medalCountBallsportart = as.matrix(subset(data, Sportart == "Ballsport")[,3:5])
 rownames(medalCountBallsportart) = landNames
 
 giveExpected(medalCountBallsportart)
 myChisqTest(medalCountBallsportart, 0.05)
 fisher.test(medalCountBallsportart) # lehnt ab
 # China hat mehr als erwartet
-chisq.test(medalCountBallsportart, simulate.p.value = T)
+#chisq.test(medalCountBallsportart, simulate.p.value = T)
 
 # Medaillenspiegel fuer Schwimmen
-medalCountSchwimmen = as.matrix(subset(data, Sportart == "Schwimmen")[,3:5])
+medalCountSchwimmen = as.matrix(subset(data, Sportart == "Schwimmsport")[,3:5])
 rownames(medalCountSchwimmen) = landNames
 
 giveExpected(medalCountSchwimmen)
@@ -180,7 +182,7 @@ myChisqTest(medalCountUSA, 0.05)
 fisher.test(medalCountUSA)
 
 # Medaillenspiegel fuer VR China
-medalCountChina = as.matrix(subset(data, Land == "VR China")[,3:5])
+medalCountChina = as.matrix(subset(data, Land == "CHN")[,3:5])
 rownames(medalCountChina) = sportNames
 
 giveExpected(medalCountChina)
@@ -189,7 +191,7 @@ fisher.test(medalCountChina) # lehnt ab
 # China ist besser im Ballsport als erwartet, rest passt ca 
 
 # Medaillenspiegel fuer Japan
-medalCountJapan = as.matrix(subset(data, Land == "Japan")[,3:5])
+medalCountJapan = as.matrix(subset(data, Land == "JPN")[,3:5])
 rownames(medalCountJapan) = sportNames
 
 giveExpected(medalCountJapan)
@@ -198,7 +200,7 @@ fisher.test(medalCountJapan) # lehnt ab
 # Japan hat etwas weniger Gold in Kampf und etwas mehr in Ball
 
 # Medaillenspiegel fuer Australien
-medalCountAustralien = as.matrix(subset(data, Land == "Australien")[,3:5])
+medalCountAustralien = as.matrix(subset(data, Land == "AUS")[,3:5])
 rownames(medalCountAustralien) = sportNames
 
 giveExpected(medalCountAustralien)
@@ -206,7 +208,7 @@ myChisqTest(medalCountAustralien, 0.05)
 fisher.test(medalCountAustralien)
 
 # Medaillenspiegel fuer Frankreich
-medalCountFrankreich = as.matrix(subset(data, Land == "Frankreich")[,3:5])
+medalCountFrankreich = as.matrix(subset(data, Land == "FRA")[,3:5])
 rownames(medalCountFrankreich) = sportNames
 
 giveExpected(medalCountFrankreich)
@@ -263,7 +265,7 @@ barplot(t(medalCountBallsportart),
         beside = T,
         ylim = c(0,15),
         col = medalCols,
-        main = "Ballsportart",
+        main = "Ballsport",
         cex.names = 1.2,
         cex.main = 1.35)
 legend("top", ncol = 3, legend = medalNames, pt.bg = medalCols, 
@@ -273,7 +275,7 @@ barplot(t(medalCountSchwimmen),
         beside = T,
         ylim = c(0,15),
         col = medalCols,
-        main = "Schwimmen",
+        main = "Schwimmsport",
         cex.names = 1.2,
         cex.main = 1.35)
 legend("top", ncol = 3, legend = medalNames, pt.bg = medalCols, 

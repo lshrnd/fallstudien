@@ -1,0 +1,195 @@
+%% Leichtathetik
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l||r|r|r|r|r|r||r}
+        \textbf{L} & 
+        \multicolumn{2}{c|}{Gold} & \multicolumn{2}{c|}{Silber} 
+        & \multicolumn{2}{c||}{Bronze}  & $\Sigma$\\ \hline
+        \hline
+        USA & 14 & 12.30 & 11 & 10.85 & 9 & 10.85 & 34 \\ \hline
+        CHN & 1 & 1.45 & 1 & 1.28 & 2 & 1.28 & 4 \\ \hline 
+        JPN & 1 & 0.36 & 0 & 0.32 & 0 & 0.32 & 1 \\ \hline
+        AUS & 1 & 2.53 & 2 & 2.23 & 4 & 2.23 & 7 \\ \hline
+        FRA & 0 & 0.36 & 1 & 0.32 & 0 & 0.32 & 1 \\ \hline
+        \hline
+        $\Sigma$ &  \multicolumn{2}{c|}{17} &  \multicolumn{2}{c|}{15} &  
+        \multicolumn{2}{c||}{15} &  47 \\
+    \end{tabular}
+    \caption{Beobachtete (links) und erwartete Anzahlen (rechts) an Medaillen für Leichtathletik}
+    \label{tab:4leicht}
+\end{table}
+
+%% Ballsport
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l||r|r|r|r|r|r||r}
+        \textbf{B} & 
+        \multicolumn{2}{c|}{Gold} & \multicolumn{2}{c|}{Silber} 
+        & \multicolumn{2}{c||}{Bronze}  & $\Sigma$\\ \hline
+        \hline
+        USA & 3 & 3.50 & 2 & 3.75 & 5 & 2.75 & 10 \\ \hline
+        CHN & 8 & 4.90 & 6 & 5.25 & 0 & 3.85 & 14 \\ \hline 
+        JPN & 0 & 1.40 & 1 & 1.50 & 3 & 1.10 & 4 \\ \hline
+        AUS & 1 & 1.05 & 1 & 1.13 & 1 & 0.83 & 3 \\ \hline
+        FRA & 2 & 3.15 & 5 & 3.38 & 2 & 2.48 & 9 \\ \hline
+        \hline
+        $\Sigma$ &  \multicolumn{2}{c|}{14} &  \multicolumn{2}{c|}{15} &  
+        \multicolumn{2}{c||}{11} & 40 \\
+    \end{tabular}
+    \caption{Beobachtete (links) und erwartete Anzahlen (rechts) an Medaillen für Ballsport}
+    \label{tab:4ball}
+\end{table}
+
+%% Schwimmsport
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l||r|r|r|r|r|r||r}
+        \textbf{S} & 
+        \multicolumn{2}{c|}{Gold} & \multicolumn{2}{c|}{Silber} 
+        & \multicolumn{2}{c||}{Bronze}  & $\Sigma$\\ \hline
+        \hline
+        USA        & 8 & 9.53 & 14 & 11.60 & 7 & 7.87 & 29\\ \hline
+        CHN        & 4 & 4.60 & 3 & 5.60 & 7 & 3.80 & 14 \\ \hline 
+        JPN        & 0 & 0.33 & 1 & 0.40 & 0 & 0.27 & 1 \\ \hline
+        AUS        & 7 & 6.24 & 9 & 7.6 & 3 & 5.16 & 19 \\ \hline
+        FRA        & 4 & 2.30 & 1 & 2.80 & 2 & 1.90 & 7 \\ \hline
+        \hline
+        $\Sigma$ &  \multicolumn{2}{c|}{23} &  \multicolumn{2}{c|}{28} &  
+        \multicolumn{2}{c||}{19} & 70 \\
+    \end{tabular}
+    \caption{Beobachtete (links) und erwartete Anzahlen (rechts) an Medaillen für Schwimmsport}
+    \label{tab:4schwimm}
+\end{table}
+
+\newpage
+\subsection{Aufgabe 3 Anhang}
+\label{sec:4AnhangA3}
+\begin{minipage}[t]{0.45\textwidth}
+%% China
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l||r|r|r|r|r|r||r}
+        \textbf{CHN} & 
+        \multicolumn{2}{c|}{Gold} & \multicolumn{2}{c|}{Silber} 
+        & \multicolumn{2}{c||}{Bronze}  & $\Sigma$\\ \hline
+        \hline
+        K & 3 & 4.62 & 4 & 4.04 & 6 & 4.34 & 13 \\ \hline
+        L & 1 & 1.42 & 1 & 1.25 & 2 & 1.33 & 4 \\ \hline 
+        B & 8 & 4.98 & 6 & 4.35 & 0 & 4.67 & 14 \\ \hline
+        S & 4 & 4.98 & 3 & 4.35 & 7 & 4.67 & 14 \\ \hline
+        \hline
+        $\Sigma$ &  \multicolumn{2}{c|}{16} &  \multicolumn{2}{c|}{14} &  
+        \multicolumn{2}{c||}{15} & 45 \\
+    \end{tabular}
+    \caption{Beobachtete (links) und erwartete Anzahlen (rechts) an Medaillen für China}
+    \label{tab:4china}
+\end{table}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+%% Japan
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l||r|r|r|r|r|r||r}
+        \textbf{JPN} & 
+        \multicolumn{2}{c|}{Gold} & \multicolumn{2}{c|}{Silber} 
+        & \multicolumn{2}{c||}{Bronze}  & $\Sigma$\\ \hline
+        \hline
+        K & 11 & 9.12 & 3 & 3.80 & 5 & 6.08 & 18 \\ \hline
+        L & 1 & 0.48 & 0 & 0.20 & 0 & 0.32 & 1 \\ \hline 
+        B & 0 & 1.92 & 1 & 0.80 & 3 & 1.28 & 4 \\ \hline
+        S & 0 & 0.48 & 1 & 0.20 & 0 & 0.32 & 1 \\ \hline
+        \hline
+        $\Sigma$ &  \multicolumn{2}{c|}{12} &  \multicolumn{2}{c|}{5} &  
+        \multicolumn{2}{c||}{8} & 25 \\
+    \end{tabular}
+    \caption{Beobachtete (links) und erwartete Anzahlen (rechts) an Medaillen für Japan}
+    \label{tab:4japan}
+\end{table}
+\end{minipage}
+
+\begin{minipage}[t]{0.45\textwidth}
+%% Australien
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l||r|r|r|r|r|r||r}
+        \textbf{AUS} & 
+        \multicolumn{2}{c|}{Gold} & \multicolumn{2}{c|}{Silber} 
+        & \multicolumn{2}{c||}{Bronze}  & $\Sigma$\\ \hline
+        \hline
+        K & 0 & 0.58 & 0 & 0.77 & 2 & 0.65 & 2 \\ \hline
+        L & 1 & 2.03 & 2 & 2.70 & 4 & 2.26 & 7 \\ \hline 
+        B & 1 & 0.87 & 1 & 1.16 & 1 & 0.97 & 3 \\ \hline
+        S & 7 & 5.52 & 9 & 7.35 & 3 & 6.12 & 19 \\ \hline
+        \hline
+        $\Sigma$ &  \multicolumn{2}{c|}{9} &  \multicolumn{2}{c|}{12} &  
+        \multicolumn{2}{c||}{10} & 31 \\
+    \end{tabular}
+    \caption{Beobachtete (links) und erwartete Anzahlen (rechts) an Medaillen für Australien}
+    \label{tab:4austr}
+\end{table}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+%% Frankreich
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l||r|r|r|r|r|r||r}
+        \textbf{FRA} & 
+        \multicolumn{2}{c|}{Gold} & \multicolumn{2}{c|}{Silber} 
+        & \multicolumn{2}{c||}{Bronze}  & $\Sigma$\\ \hline
+        \hline
+        K & 3 & 4.22 & 4 & 5.16 & 8 & 5.62 & 15\\ \hline
+        L & 0 & 0.28 & 1 & 0.34 & 0 & 0.38 & 1 \\ \hline 
+        B & 2 & 2.53 & 5 & 3.09 & 2 & 3.38 & 9 \\ \hline
+        S & 4 & 1.97 & 1 & 2.41 & 2 & 2.62 & 7 \\ \hline
+        \hline
+        $\Sigma$ &  \multicolumn{2}{c|}{9} &  \multicolumn{2}{c|}{11} &  
+        \multicolumn{2}{c||}{12} & 32 \\
+    \end{tabular}
+    \caption{Beobachtete (links) und erwartete Anzahlen (rechts) an Medaillen für Frankreich}
+    \label{tab:4frank}
+\end{table}
+\end{minipage}
+
+
+
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l||r|r|r|r|r|r||r}
+        \textbf{USA} & 
+        \multicolumn{2}{c|}{Gold} & \multicolumn{2}{c|}{Silber} 
+        & \multicolumn{2}{c||}{Bronze}  & $\Sigma$\\ \hline
+        \hline
+        K & 2 & 2.96 & 2 & 3.18 & 5 & 2.85 & 9 \\ \hline
+        L & 14 & 11.19 & 11 & 12.02 & 9 & 10.78 & 34 \\ \hline 
+        B & 3 & 3.29 & 2 & 3.54 & 5 & 3.17 & 10 \\ \hline
+        S & 8 & 9.55 & 14 & 10.26 & 7 & 9.20 & 29 \\ \hline
+        \hline
+        $\Sigma$ &  \multicolumn{2}{c|}{27} &  \multicolumn{2}{c|}{29} &  
+        \multicolumn{2}{c||}{26} & 82 \\
+    \end{tabular}
+    \caption{Beobachtete (links) und erwartete Anzahlen (rechts) an Medaillen für USA}
+    \label{tab:4usa}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l||r|r|r|r|r|r||r}
+        \textbf{K} & 
+        \multicolumn{2}{c|}{Gold} & \multicolumn{2}{c|}{Silber} 
+        & \multicolumn{2}{c||}{Bronze}  & $\Sigma$\\ \hline
+        \hline
+        USA & 2  & 2.95 & 2 & 2.02 & 5 & 4.03 & 9\\ \hline
+        CHN & 3  & 4.26 & 4 & 2.91 & 6 & 5.83 & 13\\ \hline 
+        JPN & 11 & 6.22 & 3 & 4.26 & 5 & 8.52 & 19 \\ \hline
+        AUS & 0  & 0.66 & 0 & 0.45 & 2 & 0.90 & 2 \\ \hline
+        FRA & 3  & 4.91 & 4 & 3.36 & 8 & 6.72 & 15 \\ \hline
+        \hline
+        $\Sigma$ &  \multicolumn{2}{c|}{19} &  \multicolumn{2}{c|}{13} &  
+        \multicolumn{2}{c||}{26} & 58 \\
+    \end{tabular}
+    \caption{Beobachtete (links) und erwartete Anzahlen (rechts) an Medaillen für Kampfsport}
+    \label{tab:4kampf}
+\end{table}
