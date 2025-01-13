@@ -67,3 +67,41 @@ lasso_model$lambda.min
 
 # Coefficients des Lasso-Modells anzeigen
 coef(lasso_model, s = "lambda.min")
+
+################### forward regression
+electiondata$Leading_Candidate = as.numeric(electiondata$Leading_Candidate) - 1
+
+min.model = lm(Leading_Candidate  ~ ( Total_Area + Population 
+                                      + Population_Density
+                                      + Median_Age 
+                                      + Birth_Rate 
+                                      + HDI 
+                                      + Unemployment_Rate
+                                      + Health_Insurance_Coverage
+                                      + Median_Rent),
+               data = electiondata
+)
+
+max.model = lm(Leading_Candidate  ~ ( Total_Area + Population 
+                                      +Population_Density
+                                      + Median_Age 
+                                      + Birth_Rate 
+                                      + HDI 
+                                      + Unemployment_Rate
+                                      + Health_Insurance_Coverage
+                                      + Median_Rent)^2,
+               data = electiondata
+)
+
+auto.forward = step(min.model, direction = "forward", 
+                    scope = list(lower = min.model, upper = max.model))
+
+auto.backward = step(max.model, direction = "backward",
+                     scope = list(lower = min.model, upper = max.model))
+
+auto.both = step(min.model, direction  = "both",
+                 scope = list(lower = min.model, upper = max.model))
+
+signif( coef(auto.forward),3)
+
+signif( coef(auto.backward),3)
