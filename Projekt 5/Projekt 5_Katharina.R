@@ -50,23 +50,36 @@ reg = glm(Leading_Candidate ~ ( Total_Area
 
 summary(reg)
 #Aufgabe 2
-# Paket glmnet laden
-library(glmnet)
-
-# Daten vorbereiten (nur numerische Variablen)
-X <- as.matrix(electiondata[, c("Total_Area", "Population", "Population_Density", 
-                        "Median_Age", "Birth_Rate", "HDI", 
-                        "Unemployment_Rate", "Health_Insurance_Coverage", "Median_Rent")])
-y <- electiondata$Leading_Candidate
-
-# Lasso-Logistische Regression durchführen
-lasso_model <- cv.glmnet(X, y, alpha = 1, family = "binomial")
-
-# Beste Lambda-Parameter anzeigen
-lasso_model$lambda.min
-
-# Coefficients des Lasso-Modells anzeigen
-coef(lasso_model, s = "lambda.min")
+#Drop
+drop1(glm(Leading_Candidate ~ ( Total_Area 
+                                + Population 
+                                +Population_Density
+                                + Median_Age 
+                                + Birth_Rate 
+                                + HDI 
+                                + Unemployment_Rate
+                                + Health_Insurance_Coverage
+                                + Median_Rent),
+          data = electiondata,
+          family = binomial()))
+#Add
+add1(glm(Leading_Candidate~Total_Area, data =electiondata, family = binomial()), gesamt_Modell)
+add1(glm(Leading_Candidate~Total_Area+HDI, data =electiondata,
+         family = binomial()), gesamt_Modell)
+#
+add1(glm(Leading_Candidate~Total_Area+HDI+Unemployment_Rate,
+         data =electiondata,
+         family = binomial()), gesamt_Modell)
+#
+add1(glm(Leading_Candidate~Total_Area+HDI+Unemployment_Rate+Population,
+         data =electiondata,
+         family = binomial()), gesamt_Modell)
+#
+add1(glm(Leading_Candidate~Total_Area
+         +HDI+Unemployment_Rate+Population+Birth_Rate,
+         data =electiondata,
+         family = binomial()), gesamt_Modell)
+#Reduziertes Modell
 
 ################### forward regression
 electiondata$Leading_Candidate = as.numeric(electiondata$Leading_Candidate) - 1
