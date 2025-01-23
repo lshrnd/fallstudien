@@ -136,7 +136,7 @@ myPlotRoc = function(target, truth, probsTarget = NULL, ...) {
   
   # plot skeleton
   plot(NA, xlim = c(0,1), ylim = c(0,1), 
-       xlab = "TNR", ylab = "TPR", ...)
+       xlab = "FPR", ylab = "TPR", ...)
   abline(0, 1, lty = 2, col = "grey")
   
   # plot TPR-TNR ROC-Curve

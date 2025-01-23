@@ -357,3 +357,29 @@ offset_mod$fit <- function(x, y, wts, param, lev, last, classProbs, ...) {
 
 mod <- train(x = anorexia[, 1:2], y = anorexia$Postwt, method = offset_mod)
 coef(mod$finalModel)
+
+
+
+##### Deskription #####
+
+plot(electiondata[,3:4], col = electiondata$Leading_Candidate)
+plot(electiondata[,3:11], col = electiondata$Leading_Candidate)
+
+
+
+
+logFun = function(x) { 1 / (1 + exp(-x))}
+
+bssLMTest = function(x) { 
+  print(x)
+  t(as.matrix(fit_bestsubset$coefficients)) %*% (as.matrix(c(1, unlist(x))))
+}
+
+electiondataBss = electiondata[, varIndexes$`100`]
+
+myPreds = rep(NA, 51)
+for(i in 1:51) {
+  # todo -> log function
+  myPreds[i] = (bssLMTest(electiondataBss[i, ]))
+}
+
